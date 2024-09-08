@@ -1,39 +1,39 @@
 import React from "react";
 import { useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+// import { onAuthStateChanged } from "firebase/auth";
 import "./Books-style.css";
 import BooksScroll from "./BooksScroll";
 import BottomSection from "../BottomSection/BottomSection";
-import { signOut } from "firebase/auth";
-import { database } from "../LoginPage/firebase";
+// import { signOut } from "firebase/auth";
+// import { database } from "../LoginPage/firebase";
 import { useNavigate } from "react-router-dom";
 
 function Books() {
     const history = useNavigate();
-   const signout = () => {
-       signOut(database)
-           .then(() => {
-               // Successful sign-out
-               alert("User signed out successfully");
-               history("/");
-           })
-           .catch((error) => {
-               // Handle sign-out errors
-               console.error("Error signing out:", error.message);
-           });
-    };
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(database, (user) => {
-            if (!user) {
+//    const signout = () => {
+//        signOut(database)
+//            .then(() => {
+//                // Successful sign-out
+//                alert("User signed out successfully");
+//                history("/");
+//            })
+//            .catch((error) => {
+//                // Handle sign-out errors
+//                console.error("Error signing out:", error.message);
+//            });
+//     };
+    // useEffect(() => {
+        // const unsubscribe = onAuthStateChanged(database, (user) => {
+            // if (user) {
                 // User is not authenticated
-                alert("Please sign up to access this page");
+                // alert("Please sign up to access this page");
                 // Redirect to the login page or another appropriate page
-                history("/loginpage");
-            }
-        });
+                // history("/loginpage");
+            // }
+        // });
 
-        return () => unsubscribe();
-    }, [history]);
+        // return () => unsubscribe();
+    // }, [history]);
 
     return (
         <div className="booksMain">
@@ -44,7 +44,7 @@ function Books() {
                         next book.
                     </h1>
                 </div>
-                <div className="main">
+                {/* <div className="main">
                     <div className="cards" id="c1">
                         <img src="story1.jpg" alt="" />
                     </div>
@@ -63,7 +63,7 @@ function Books() {
                     <div className="cards" id="c6">
                         <img src="story6.jpg" alt="" />
                     </div>
-                </div>
+                </div> */}
             </div>
             <div className="booktoprtg"></div>
             <div className="booksbtm">
@@ -72,7 +72,7 @@ function Books() {
                         <h1>Best Books Available Here</h1>
                     </div>
                     <div className="seemore-btn">
-                        <button onClick={signout}>Sign Out</button>
+                        {/* <button onClick={signout}>Sign Out</button> */}
                     </div>
                 </div>
                 <div className="btm-scrol">

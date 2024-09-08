@@ -24,7 +24,7 @@ const Swiper = () => {
     useEffect(() => {
         const timer = setInterval(() => {
             handleNext();
-        }, 4000);
+        }, 5000);
 
         return () => {
             clearInterval(timer);

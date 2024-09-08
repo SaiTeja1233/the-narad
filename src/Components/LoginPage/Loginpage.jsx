@@ -1,20 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Login-style.css";
 import BottomSection from "../BottomSection/BottomSection";
-import { database } from "./firebase";
-import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-} from "firebase/auth";
+
 import { useNavigate } from "react-router-dom";
-import Background from "../Background/Background";
+import { useAuth } from "../utils/AuthContext";
+// import Background from "../Background/Background";
 
 function Loginpage() {
-    const [login, setLogin] = useState(false);
-    const history = useNavigate();
+    // const [login, setLogin] = useState(true);
+    const navigate = useNavigate();
+    const { user, loginUser } = useAuth();
+    const loginForm = useRef(null);
+    const registerForm = useRef(null);
 
-    const [isActive, setIsActive] = useState(false);
-    const [email, setEmail] = useState(""); // State to store the email
+    useEffect(() => {
+        if (user) {
+            navigate("/books");
+        }
+    });
+
+    const [isActive, setIsActive] = useState(true);
+    // const [email, setEmail] = useState(""); // State to store the email
 
     const handleRegisterClick = () => {
         setIsActive(true);
@@ -24,47 +30,66 @@ function Loginpage() {
         setIsActive(false);
     };
 
-    const handleSubmit = (e, type) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const enteredEmail = e.target.email.value;
-        const enteredPassword = e.target.password.value;
+        const email = loginForm.current.email.value;
+        const password = loginForm.current.password.value;
 
-        if (type === "signup") {
-            createUserWithEmailAndPassword(
-                database,
-                enteredEmail,
-                enteredPassword
-            )
-                .then((data) => {
-                    // Store the email in state
-                    alert("Successfully signed Up");
-                    setEmail(enteredEmail);
-
-                    // Navigate to the sign-in page
-                    setLogin(true);
-                    setIsActive(false);
-                })
-                .catch((err) => {
-                    if (err.code === "auth/email-already-in-use") {
-                        // Redirect to login page if email is already in use
-                        setLogin(true);
-                        setIsActive(false);
-                    } else {
-                        alert(err.code);
-                    }
-                });
-        } else {
-            signInWithEmailAndPassword(database, enteredEmail, enteredPassword)
-                .then((data) => {
-                    // Navigate to the books component
-                    history("/books");
-                    console.log(data, "authData");
-                })
-                .catch((err) => {
-                    alert(err.code);
-                });
-        }
+        const userInfo = { email, password };
+        // loginUser(userInfo)
+        loginUser(userInfo);
     };
+
+    const handleRegisterSubmit = (e) => {
+        e.preventDefault();
+        const name = registerForm.current.name.value;
+        const email = registerForm.current.email.value;
+        const password = registerForm.current.password.value;
+
+        const userInfo = { name, email, password };
+        registerUser(userInfo);
+    };
+    // const handleSubmit = (e, type) => {
+    //     e.preventDefault();
+    //     const enteredEmail = e.target.email.value;
+    //     const enteredPassword = e.target.password.value;
+
+    //     if (type === "signup") {
+    //         createUserWithEmailAndPassword(
+    //             database,
+    //             enteredEmail,
+    //             enteredPassword
+    //         )
+    //             .then((data) => {
+    //                 // Store the email in state
+    //                 alert("Successfully signed Up");
+    //                 setEmail(enteredEmail);
+
+    //                 // Navigate to the sign-in page
+    //                 setLogin(true);
+    //                 setIsActive(false);
+    //             })
+    //             .catch((err) => {
+    //                 if (err.code === "auth/email-already-in-use") {
+    //                     // Redirect to login page if email is already in use
+    //                     setLogin(true);
+    //                     setIsActive(false);
+    //                 } else {
+    //                     alert(err.code);
+    //                 }
+    //             });
+    //     } else {
+    //         signInWithEmailAndPassword(database, enteredEmail, enteredPassword)
+    //             .then((data) => {
+    //                 // Navigate to the books component
+    //                 history("/books");
+    //                 console.log(data, "authData");
+    //             })
+    //             .catch((err) => {
+    //                 alert(err.code);
+    //             });
+    //     }
+    // };
 
     const SignUp = (e) => {
         e.preventDefault();
@@ -83,9 +108,11 @@ function Loginpage() {
                 >
                     <div className="form-container sign-up">
                         <form
-                            onSubmit={(e) => {
-                                handleSubmit(e, login ? "signin" : "signup");
-                            }}
+                            // onSubmit={(e) => {
+                            //     handleSubmit(e, login ? "signin" : "signup");
+                            // }}
+                            ref={registerForm}
+                            onSubmit={handleRegisterSubmit}
                         >
                             <h1>Create Account</h1>
                             <span> use your email for registration</span>
@@ -94,8 +121,8 @@ function Loginpage() {
                                 type="email"
                                 placeholder="Email"
                                 name="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                // value={email}
+                                // onChange={(e) => setEmail(e.target.value)}
                             />
                             <input
                                 type="password"
@@ -108,9 +135,11 @@ function Loginpage() {
 
                     <div className="form-container sign-in">
                         <form
-                            onSubmit={(e) => {
-                                handleSubmit(e);
-                            }}
+                            // onSubmit={(e) => {
+                            //     handleSubmit(e);
+                            // }}
+                            ref={loginForm}
+                            onSubmit={handleSubmit}
                         >
                             <h1>Sign In</h1>
                             <span> use your email password</span>
@@ -118,8 +147,8 @@ function Loginpage() {
                                 type="email"
                                 placeholder="Email"
                                 name="email"
-                                value={email} // Use the stored email in the input field
-                                onChange={(e) => setEmail(e.target.value)}
+                                // value={email} // Use the stored email in the input field
+                                // onChange={(e) => setEmail(e.target.value)}
                             />
                             <input
                                 type="password"

@@ -37,7 +37,7 @@
 }
 .home-btn-container {
     /* background-image: linear-gradient(rgb(0, 173, 66), black); */
-    background-color:  #150628;
+    /* background-color:  #150628; */
     width: 100%;
     display: flex;
     align-items: center;
@@ -48,7 +48,7 @@
 .home-btm-RtgText {
     color: white;
     font-size: 60px;
-    border: 5px solid rgba(131, 255, 179, 0.626);
+    border: 5px solid rgba(199, 232, 255, 0.827);
     box-shadow: rgba(0, 0, 0, 0.411) 0px 10px 20px,
         rgba(0, 0, 0, 0.582) 0px 6px 6px,
         inset rgba(0, 0, 0, 0.19) 0px 10px 20px,
@@ -59,7 +59,7 @@
     text-align: center;
 }
 .home-btm-RtgText:hover {
-    border: 5px solid rgb(131, 255, 179);
+    border: 5px solid rgb(67, 139, 255);
     transition: all ease-in-out 0.3s;
 }
 .fstTxT {

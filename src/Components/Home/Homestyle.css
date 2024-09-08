@@ -80,7 +80,7 @@
 .Home-Books {
     margin-top: 3%;
     /* background-image: linear-gradient(#150628, rgb(0, 173, 66)); */
-    background-color: #150628;
+    /* background-color: #150628; */
     width: 100%;
     height: 100vh;
     display: grid;

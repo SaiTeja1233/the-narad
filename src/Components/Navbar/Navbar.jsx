@@ -1,8 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navstyles.css";
+import { useAuth } from "../utils/AuthContext";
 
 function Navbar() {
+    const navigate = useNavigate();
+
+    const { user } = useAuth();
+
+    const logoutClick = () => {
+        navigate("/loginpage");
+    };
     return (
         <div className="Navbar">
             <div>
@@ -23,7 +31,13 @@ function Navbar() {
                         <Link to="/contact">Contact</Link>
                     </li>
                     <li>
-                        <Link to="/loginpage">Login</Link>
+                        {user ? (
+                            <>
+                                <button onClick={logoutClick}>LOGOUT</button>
+                            </>
+                        ) : (
+                            <Link to="/loginpage">Login</Link>
+                        )}
                     </li>
                 </ul>
             </div>

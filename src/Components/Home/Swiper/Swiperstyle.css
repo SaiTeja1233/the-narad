@@ -2,25 +2,23 @@
 .home-img2,
 .home-img3,
 .home-img4 {
-    height: 75vh;
+    height: 70vh;
 }
 
 .custom-carousel {
     position: absolute;
-    top: 14%;
-    left: 25%;
-    width: 70%;
-    height: 75vh;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7), 0 6px 6px rgba(0, 0, 0, 0.459);
+    top: 17%;
+    left: 4%;
+    width: 62%;
+    height: 70vh;
 }
 .controls {
-    /* border: 1px solid white; */
     position: absolute;
     top: 92%;
     left: 85%;
-    gap: 8%;
+    gap: 18%;
     width: 10%;
-    height: 5vh;
+    height: 8vh;
     display: flex;
     justify-content: center;
     align-items: center;
