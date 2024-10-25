@@ -1,91 +1,113 @@
-.home-Imgslider {
-    width: 100%;
-    height: 91.5vh;
-}
-.homeText {
-    position: absolute;
-    top: 32%;
-    left: 5%;
-    height: 40vh;
-    width: 55%;
-}
 
-.homelogoName {
-    text-shadow: 0 14.36px 4.896px #000000;
-    letter-spacing: 4px;
-    color: rgb(191, 0, 255);
-    font-family: "Arvo";
-    font-size: 100px;
-    padding: 2%;
-}
-.hometextLine {
-    width: 75%;
-}
-.hometextLine > p {
-    text-shadow: 0px 4px 3px rgb(0, 0, 0), 0px 8px 13px rgba(0, 0, 0, 0.538),
-        0px 18px 23px rgba(0, 0, 0, 0.353);
-    color: white;
-    font-size: 25px;
-    font-family: "Arvo";
-    padding-left: 2%;
-    padding-top: 10%;
-    width: 90%;
-}
-.hometextwriter > p {
-    color: rgb(174, 0, 255);
-    /* font-weight: 300; */
-    position: absolute;
-    width: 40%;
-    bottom: -38%;
-    /* left: -2%; */
-    font-family: "Arvo";
-    /* text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.1),
-        0px 18px 23px rgba(0, 0, 0, 0.1); */
-}
-.homeBtm {
-    width: 100%;
-    height: 38vh;
-    background-color: rgb(224, 224, 224);
-    display: flex;
-    justify-content: space-around;
-    padding-top: 2%;
-}
-/* .HomeTopLine {
-    width: 70%;
-    height: 4vh;
-    color: white;
-    background-color: rgb(93, 93, 255);
-} */
 
-.btmImg {
-    border: 1px solid;
-    width: 18%;
-    height: 30vh;
-    margin-right: -25%;
-}
-.btmRtgtext {
+.Home-cont {
+    /* position: absolute; */
+    width: 100%;
     display: flex;
-    padding-top: 2%;
-    justify-content: space-evenly;
-    height: 30vh;
-    width: 60%;
-    color: #8c8c8c;
-    padding-left: 13%;
-}
-.title {
-    color: rgb(255, 255, 255);
-    font-weight: 600;
-    font-size: 20px;
+    flex-direction: column;
 }
 .Home-Books {
-    margin-top: 3%;
-    /* background-image: linear-gradient(#150628, rgb(0, 173, 66)); */
-    /* background-color: #150628; */
-    width: 100%;
-    height: 100vh;
     display: grid;
-    grid-template-columns: auto auto auto;
-    justify-content: space-around;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 10px;
+    padding: 5% 2% 8% 2%;
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+.home_btmtext {
+    background-color: rgb(18, 18, 18);
+    height: 25vh;
+    display: flex;
     align-items: center;
-    column-gap: -10%;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0 0 5% 0;
+}
+
+.home_btmtoptext > p {
+    margin: 6% 0 5% 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(18, 18, 18); /* Dark background for contrast */
+    height: 23vh; /* Height of the text section */
+    font-weight: 700; /* Bold text for emphasis */
+    font-size: 2.5rem; /* Large font size for readability */
+    line-height: 1.4; /* Increased line height for better spacing */
+    color: #f1f1f1; /* Softer white for a more pleasant contrast */
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+
+    border-radius: 8px;
+}
+.fstTxT,
+.secTxT {
+    font-weight: 600;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    color: #ffffff;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.World,
+.Stories {
+    font-weight: 700;
+    color: #475aff;
+    display: inline-block; /* Ensure it can be animated independently */
+}
+
+@media (max-width: 768px) {
+    .fstTxT,
+    .secTxT,
+    .home_btmtoptext > p {
+        font-size: 2rem;
+    }
+
+    .World,
+    .Stories {
+        font-size: 2.2rem;
+    }
+}
+
+.audio-control {
+    width: 100%;
+    position: fixed;
+    top: 85%;
+    right: -93%;
+    z-index: 100;
+}
+.imageslider {
+    width: 100%;
+    height: 50vh;
+    border: 1px solid white;
+    margin: 10% 0 5% 0;
+}
+
+@media screen and (max-width: 768px) {
+    .audio-control {
+        width: 100%;
+        position: fixed;
+        top: 85%;
+        right: -90%;
+        z-index: 100;
+    }
+}
+@media screen and (max-width: 321px) {
+    .audio-control {
+        width: 100%;
+        position: fixed;
+        top: 85%;
+        right: -80%;
+        z-index: 100;
+    }
+}
+@media screen and (max-width: 376px) {
+    .audio-control {
+        width: 100%;
+        position: fixed;
+        top: 85%;
+        right: -80%;
+        z-index: 100;
+    }
 }

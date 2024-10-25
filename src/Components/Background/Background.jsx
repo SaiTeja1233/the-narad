@@ -21,7 +21,7 @@ function Background() {
                 options={{
                     fullScreen: false,
                     background: {
-                        image: " linear-gradient(19deg, #21D4FD 0%, #B721FF 100%)",
+                        image: " linear-gradient(19deg, #21212100 0%,#21212100 100%)",
                     },
                     particles: {
                         number: {
@@ -63,7 +63,7 @@ function Background() {
                         },
                         move: {
                             enable: true,
-                            speed: 0.5,
+                            speed: 0.8,
                             direction: "top",
                             straight: true,
                             out_mode: "out",

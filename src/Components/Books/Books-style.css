@@ -1,173 +1,125 @@
 .booksMain {
     width: 100%;
-    height: 91.5vh;
-    margin: 0 auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-.bookstop {
-    /* background-color: rgba(25, 76, 104, 0.671); */
-    height: 46vh;
-    width: 95%;
-    position: absolute;
-    top: 8%;
-    z-index: 2;
-}
-.booktoprtg {
+.bookpage-top {
     width: 100%;
-    height: 46vh;
-    background-image: url("../../../public/books.avif");
+    height: 60vh;
 }
-.main {
+@import url("https://fonts.googleapis.com/css?family=Roboto:700");
+@keyframes showTopText {
+    0% {
+        transform: translate3d(0, 100%, 0);
+    }
+    40%,
+    60% {
+        transform: translate3d(0, 50%, 0);
+    }
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+@keyframes showBottomText {
+    0% {
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+.animated-title {
+    font-family: Roboto, Arial, sans-serif;
+    height: 50%;
+    right: 10px;
     position: absolute;
-    top: 20%;
-    left: 75%;
-    height: 30vh;
-    width: 20%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+}
+
+.animated-title > div {
+    height: 50%;
+    overflow: hidden;
+    position: absolute;
+    width: 60%;
+}
+.animated-title > div div {
+    color: #b6b6b6;
+    font-size: 4vw;
+    padding: 2vmin 0;
+    position: absolute;
+}
+.animated-title > div div span {
+    display: block;
+}
+.animated-title > div.text-top {
+    border-bottom: 1vmin solid #000000;
+    top: 0;
+}
+.animated-title > div.text-top div {
+    animation: showTopText 1s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+    bottom: 0;
+    transform: translate(0, 100%);
+}
+.animated-title > div.text-top div span:first-child {
+    color: #ffffff;
+    font-weight: 800;
+}
+.animated-title > div.text-bottom {
+    bottom: 0;
+}
+.animated-title > div.text-bottom div {
+    animation: showBottomText 0.5s;
+    animation-delay: 1.75s;
+    animation-fill-mode: forwards;
+    font-weight: 700;
+    top: 0;
+    transform: translate(0, -100%);
+}
+.bookpage-top > img {
+    position: absolute;
+    width: 40%;
+    height: 40vh;
+    left: 50%;
+    top: 15%;
+}
+
+.book-middle {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.main:hover > :not(:hover) {
-    filter: blur(1px);
-    opacity: 0.8;
+@media only screen and (max-width: 767px) {
+    .bookpage-top {
+        height: 90vh;
+    }
+    .bookpage-top > img {
+        width: 85%;
+        height: 40vh;
+        left: 8%;
+        top: 13vh;
+    }
+    .animated-title {
+        position: absolute;
+        left: 50%;
+        top: 75%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .animated-title > div div {
+        font-size: 2rem;
+    }
+    .animated-title > div {
+        width: 80%;
+    }
+    .animated-title > div div span {
+        width: 100%;
+    }
 }
-.cards {
-    width: 50%;
-    height: 28vh;
-    position: absolute;
-    transition: 0.3s ease-in-out;
-    cursor: pointer;
-}
-.cards > img {
-    height: 25vh;
-    border-radius: 5px;
-       border: 2px solid rgb(195, 0, 255)
-}
-
-.main:hover #c1 {
-    transform: translateX(-220px) rotate(-50deg);
-   
-}
-.main:hover #c2 {
-    transform: translateX(-170px) rotate(-40deg);
-}
-
-.main:hover #c3 {
-    transform: translateX(-105px) rotate(-30deg);
-}
-
-.main:hover #c4 {
-    transform: translateX(-60px) rotate(-10deg);
-}
-.main:hover #c5 {
-    transform: translateX(0px) rotate(0deg);
-}
-.main:hover #c6 {
-    transform: translateX(80px) rotate(10deg);
-}
-#c1:hover {
-    transform: translate(-330px) !important;
-}
-
-#c2:hover {
-    transform: translateX(-230px) rotate(0deg) !important;
-}
-
-#c3:hover {
-    transform: translateX(-195px) rotate(0deg) !important;
-}
-
-#c4:hover {
-    transform: translateX(-110px) rotate(10deg) !important;
-}
-#c5:hover {
-    transform: translateX(-50px) rotate(10deg) !important;
-}
-#c6:hover {
-    transform: translateX(50px) rotate(5deg) !important;
-  
-}
-
-.booktop-headline {
-    width: 60%;
-    color: white;
-    text-align: center;
-    margin: 7%;
-    padding: 2%;
-    border: 1px solid white;
-    background-color: rgba(0, 0, 0, 0.421);
-}
-.booksbtmtext {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    height: 15vh;
-}
-.rtg-text {
-    padding-left: 5%;
-    padding-top: 1%;
-}
-.seemore-btn {
-    border: 1px solid;
-    
-}
-.seemore-btn > button{
-    background-color: rgb(155, 178, 255);
-    border-style: none;
-    width: 8%;
-    height: 4vh;
-    position: absolute;
-    border-radius: 18px;
-}
-.seemore-btn > button:hover{
-    background-color: rgb(93, 106, 255);
-    color: white;
-}
-
-/* html, body { height: 100%; }
-body {
-  background:radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
-  overflow: hidden;
-}
-
-.ocean { 
-  height: 5%;
-  width:100%;
-  position:absolute;
-  bottom:0;
-  left:0;
-  background: #015871;
-}
-
-.wave {
-  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x; 
-  position: absolute;
-  top: -198px;
-  width: 6400px;
-  height: 198px;
-  animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) infinite;
-  transform: translate3d(0, 0, 0);
-}
-
-.wave:nth-of-type(2) {
-  top: -175px;
-  animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
-  opacity: 1;
-}
-
-@keyframes wave {
-  0% {
-    margin-left: 0;
-  }
-  100% {
-    margin-left: -1600px;
-  }
-}
-
-@keyframes swell {
-  0%, 100% {
-    transform: translate3d(0,-25px,0);
-  }
-  50% {
-    transform: translate3d(0,5px,0);
-  }
-} */

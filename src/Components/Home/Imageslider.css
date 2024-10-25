@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scrolling on the page */
+}
+
+.scroll-wrapper {
+    width: 100%;
+    height: 45vh;
+    padding: 6%;
+    overflow: hidden; /* Hide overflowing images */
+    /* position: relative; */
+}
+
+.scroll-container {
+    display: flex;
+
+    gap: 5%; /* Adds space between images */
+    width: calc(
+        10% * 12 + 5% * 12
+    ); /* Width for 6 images + duplicated images + gaps */
+    animation: scrollImages 18s linear infinite; /* Smooth, infinite scroll */
+}
+
+.scroll-container img {
+    width: 100%; /* Each image takes 10% of the container's width */
+    height: 30vh;
+    object-fit: cover;
+    border-radius: 12%;
+
+}
+
+/* Keyframes for infinite horizontal scrolling */
+@keyframes scrollImages {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(
+            -55%
+        ); /* Scroll through 6 images including gaps */
+    }
+}

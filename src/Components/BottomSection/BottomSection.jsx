@@ -5,7 +5,50 @@ import { Link } from "react-router-dom";
 function BottomSection() {
     return (
         <div className="homeMianBtm">
-            <div className="btmLogoImg">
+            <div className="logo">
+                <div className="logoCont">
+                    <img src="Logo.png" alt="" />
+                    <h1>Narad</h1>
+                </div>
+            </div>
+            <div className="btmRtgtext-btn">
+                {/* <div className="userscount"></div> */}
+                <div className="company">
+                    <p className="title">Company</p>
+                    <p>
+                        <Link className="about" to="/about">
+                            About Us
+                        </Link>
+                    </p>
+                    <p>
+                        <a
+                            className="blog"
+                            href="https://www.linkedin.com/pulse/once-upon-time-the-narad-qejac?utm_source=share&utm_medium=member_ios&utm_campaign=share_via"
+                            target="_blank"
+                        >
+                            Blog
+                        </a>
+                    </p>
+                    <p>
+                        <Link className="contact" to="/contact">
+                            Contact
+                        </Link>
+                    </p>
+                </div>
+                <div className="policies">
+                    <p className="title">Policies</p>
+                    <p>Privacy Policies</p>
+                    <p>Terms of Use</p>
+                    <p>Copyright Policy</p>
+                </div>
+                <div className="help">
+                    <p className="title">Help</p>
+                    <p>Payment</p>
+                    <p>Help</p>
+                </div>
+            </div>
+
+            {/* <div className="btmLogoImg">
                 <img src="Logo.png" alt="" />
             </div>
             <div className="btmRtgtext">
@@ -96,7 +139,8 @@ function BottomSection() {
                         </svg>
                     </a>
                 </div>
-            </div>
+
+            </div> */}
         </div>
     );
 }

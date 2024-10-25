@@ -1,0 +1,93 @@
+/* From Uiverse.io by WerlynRodriguez */ 
+/* Butterfly loader created by WerlynDev in Uiverse.io*/
+
+.loader {
+  --sizeLoader:100px;
+  --sizeLoaderHalf: calc(var(--sizeLoader) / 2);
+  --stepBtf: calc(var(--sizeLoader) / 10);
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: var(--sizeLoader);
+  height: var(--sizeLoader);
+}
+
+.loader:hover {
+  cursor: progress;
+}
+
+.loader[anim1] {
+  animation: anim1 0.3s alternate ease-in-out infinite;
+}
+
+.loader:not([anim1]) {
+  right: var(--sizeLoaderHalf);
+  transform-origin: center right;
+  animation: moveAround 2s linear infinite;
+}
+
+.loader[showShadow] {
+  filter: drop-shadow(0 10px 10px #060606de);
+}
+
+.loader svg:nth-child(1) {
+  position: relative;
+  height: 100%;
+  left: 2%;
+  transform-origin: center right;
+  animation: wing 0.5s ease-in-out infinite;
+}
+
+.loader svg:nth-child(2) {
+  height: 50%;
+}
+
+.loader svg:nth-child(3) {
+  position: relative;
+  height: 100%;
+  left: -2%;
+  transform-origin: center left;
+  animation: wing 0.5s ease-in-out infinite;
+}
+
+@keyframes wing {
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateY(60deg);
+  }
+
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+@keyframes moveAround {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes anim1 {
+  from {
+    transform: translateY(0px);
+  }
+
+  to {
+    transform: translateY(var(--stepBtf));
+  }
+}
+
+/* @media (prefers-color-scheme: dark) {
+  .loader[showShadow]{
+    filter: drop-shadow(0 10px 10px #dbdbdbde);
+  }
+} */

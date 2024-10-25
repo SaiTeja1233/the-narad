@@ -10,47 +10,65 @@ const Emailform = () => {
 
         emailjs
             .sendForm(
-                "service_a4mig28",
-                "template_doowg9f",
+                "service_a4mig28", // Replace with your actual EmailJS service ID
+                "template_doowg9f", // Replace with your actual EmailJS template ID
                 form.current,
-                "1TG0N-vPvnVdYFoFs"
+                "1TG0N-vPvnVdYFoFs" // Replace with your actual EmailJS public key
             )
             .then(
                 (result) => {
                     console.log(result.text);
-                    console.log("message sent");
+                    console.log("Message sent");
                 },
                 (error) => {
                     console.log(error.text);
                 }
             );
     };
+
     return (
-        <div className="login wrap">
-            <form ref={form} onSubmit={sendEmail}>
-                <div className="h1">Contact us</div>
-                <input
-                    placeholder="Name"
-                    id="name"
-                    name="user_name"
-                    type="text"
-                />
-                <input
-                    pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
-                    placeholder="Email"
-                    id="email"
-                    type="email"
-                    name="user_email"
-                />
-                <textarea
-                    name="message"
-                    id=""
-                    rows="2"
-                    placeholder="Enter your message"
-                    type="textarea"
-                ></textarea>
-                <input value="Send" className="btn" type="submit" />
-            </form>
+        /* From Uiverse.io by codebykay101 */
+        <div className="container">
+            <div className="container-content">
+                <form className="form" ref={form} onSubmit={sendEmail}>
+                    <div className="descr">Contact us</div>
+
+                    <div className="input">
+                        <input
+                            required
+                            autoComplete="off"
+                            type="text"
+                            name="user_name"
+                            id="name"
+                        />
+                        <label htmlFor="name">Name</label>
+                    </div>
+
+                    <div className="input">
+                        <input
+                            required
+                            autoComplete="off"
+                            name="user_email"
+                            type="email"
+                            id="email"
+                        />
+                        <label htmlFor="email">E-mail</label>
+                    </div>
+
+                    <div className="input">
+                        <textarea
+                            required
+                            cols="30"
+                            rows="2"
+                            name="message"
+                            id="message"
+                        ></textarea>
+                        <label htmlFor="message">Message</label>
+                    </div>
+
+                    <button type="submit">Send message →</button>
+                </form>
+            </div>
         </div>
     );
 };

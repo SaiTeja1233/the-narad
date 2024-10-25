@@ -1,212 +1,339 @@
-import React, { useEffect, useRef, useState } from "react";
-import "./Login-style.css";
+import { useNavigate } from "react-router-dom";
+import { account } from "../../appwriteConfig";
+import React, { useState } from "react";
+import "./Login-style.css"; // Link to your CSS file
 import BottomSection from "../BottomSection/BottomSection";
 
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../utils/AuthContext";
-// import Background from "../Background/Background";
-
-function Loginpage() {
-    // const [login, setLogin] = useState(true);
-    const navigate = useNavigate();
-    const { user, loginUser } = useAuth();
-    const loginForm = useRef(null);
-    const registerForm = useRef(null);
-
-    useEffect(() => {
-        if (user) {
-            navigate("/books");
-        }
+const App = () => {
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+        name: "",
     });
+    const [isLogin, setIsLogin] = useState(true);
 
-    const [isActive, setIsActive] = useState(true);
-    // const [email, setEmail] = useState(""); // State to store the email
+    const navigate = useNavigate();
 
-    const handleRegisterClick = () => {
-        setIsActive(true);
-    };
+    const [showLogin, setShowLogin] = useState(true);
 
     const handleLoginClick = () => {
-        setIsActive(false);
+        setShowLogin(true);
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const email = loginForm.current.email.value;
-        const password = loginForm.current.password.value;
-
-        const userInfo = { email, password };
-        // loginUser(userInfo)
-        loginUser(userInfo);
+    const handleSignupClick = () => {
+        setShowLogin(false);
     };
 
-    const handleRegisterSubmit = (e) => {
-        e.preventDefault();
-        const name = registerForm.current.name.value;
-        const email = registerForm.current.email.value;
-        const password = registerForm.current.password.value;
-
-        const userInfo = { name, email, password };
-        registerUser(userInfo);
-    };
-    // const handleSubmit = (e, type) => {
-    //     e.preventDefault();
-    //     const enteredEmail = e.target.email.value;
-    //     const enteredPassword = e.target.password.value;
-
-    //     if (type === "signup") {
-    //         createUserWithEmailAndPassword(
-    //             database,
-    //             enteredEmail,
-    //             enteredPassword
-    //         )
-    //             .then((data) => {
-    //                 // Store the email in state
-    //                 alert("Successfully signed Up");
-    //                 setEmail(enteredEmail);
-
-    //                 // Navigate to the sign-in page
-    //                 setLogin(true);
-    //                 setIsActive(false);
-    //             })
-    //             .catch((err) => {
-    //                 if (err.code === "auth/email-already-in-use") {
-    //                     // Redirect to login page if email is already in use
-    //                     setLogin(true);
-    //                     setIsActive(false);
-    //                 } else {
-    //                     alert(err.code);
-    //                 }
-    //             });
-    //     } else {
-    //         signInWithEmailAndPassword(database, enteredEmail, enteredPassword)
-    //             .then((data) => {
-    //                 // Navigate to the books component
-    //                 history("/books");
-    //                 console.log(data, "authData");
-    //             })
-    //             .catch((err) => {
-    //                 alert(err.code);
-    //             });
-    //     }
-    // };
-
-    const SignUp = (e) => {
-        e.preventDefault();
+    // Handle input changes for all fields
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
     };
 
-    const SignIn = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
+        try {
+            await account.createEmailPasswordSession(
+                formData.email,
+                formData.password
+            );
+            navigate("/books");
+            window.location.reload();
+        } catch (error) {
+            console.error("Login failed:", error);
+        }
+    };
+
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        try {
+            await account.create(
+                formData.name,
+                formData.email,
+                formData.password
+            );
+            await handleLogin(e); // Automatically login after registration
+        } catch (error) {
+            console.error("Registration failed:", error);
+        }
+    };
+    // State to manage login/register toggle
+
+    // Function to toggle forms
+    const toggleForms = () => {
+        setIsLogin(!isLogin);
     };
 
     return (
         <div>
-            <div className="main-login-cont">
-                <div
-                    className={`container ${isActive ? "active" : ""}`}
-                    id="container"
-                >
-                    <div className="form-container sign-up">
-                        <form
-                            // onSubmit={(e) => {
-                            //     handleSubmit(e, login ? "signin" : "signup");
-                            // }}
-                            ref={registerForm}
-                            onSubmit={handleRegisterSubmit}
-                        >
-                            <h1>Create Account</h1>
-                            <span> use your email for registration</span>
-                            <input type="text" placeholder="Name" name="name" />
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                name="email"
-                                // value={email}
-                                // onChange={(e) => setEmail(e.target.value)}
-                            />
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                name="password"
-                            />
-                            <button>Sign Up</button>
-                        </form>
-                    </div>
+            <div className={`wrapper ${!isLogin ? "active" : ""}`}>
+                <span className="rotate-bg"></span>
+                <span className="rotate-bg2"></span>
 
-                    <div className="form-container sign-in">
-                        <form
-                            // onSubmit={(e) => {
-                            //     handleSubmit(e);
-                            // }}
-                            ref={loginForm}
-                            onSubmit={handleSubmit}
+                {/* Login Form */}
+                <div className={`form-box login ${!isLogin ? "hide" : ""}`}>
+                    <h2
+                        className="title animation"
+                        style={{ "--i": 0, "--j": 21 }}
+                    >
+                        Login
+                    </h2>
+                    <form action="#" onSubmit={handleLogin}>
+                        <div
+                            className="input-box animation"
+                            style={{ "--i": 1, "--j": 22 }}
                         >
-                            <h1>Sign In</h1>
-                            <span> use your email password</span>
                             <input
-                                type="email"
-                                placeholder="Email"
+                                type=""
+                                // placeholder="Email"
                                 name="email"
-                                // value={email} // Use the stored email in the input field
-                                // onChange={(e) => setEmail(e.target.value)}
+                                required
+                                value={formData.email}
+                                onChange={handleChange}
                             />
+
+                            <label htmlFor="">Email</label>
+                            <i className="bx bxs-envelope"></i>
+                        </div>
+
+                        <div
+                            className="input-box animation"
+                            style={{ "--i": 2, "--j": 23 }}
+                        >
                             <input
                                 type="password"
-                                placeholder="Password"
+                                // placeholder="Password"
                                 name="password"
+                                required
+                                value={formData.password}
+                                onChange={handleChange}
                             />
-                            <a href="#">Forget Your Password?</a>
-                            <button>Sign In</button>
-                        </form>
-                    </div>
-                    <div className="toggle-container">
-                        <div className="toggle">
-                            <div
-                                className={`toggle-panel toggle-left ${
-                                    !isActive ? "active" : ""
-                                }`}
-                            >
-                                <h1>Welcome Back!</h1>
-                                <p>
-                                    Enter your personal details to use all site
-                                    features
-                                </p>
-                                <button
-                                    onClick={handleLoginClick}
-                                    className="hidden"
-                                    id="login"
-                                >
-                                    Sign In
-                                </button>
-                            </div>
-                            <div
-                                className={`toggle-panel toggle-right ${
-                                    isActive ? "active" : ""
-                                }`}
-                            >
-                                <h1>Welcome, Friend!</h1>
-                                <p>
-                                    Enter your personal details to use all site
-                                    features
-                                </p>
-                                <button
-                                    onClick={handleRegisterClick}
-                                    className="hidden"
-                                    id="register"
+                            <label htmlFor="">Password</label>
+                            <i className="bx bxs-lock-alt"></i>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="btn animation"
+                            style={{ "--i": 3, "--j": 24 }}
+                        >
+                            Login
+                        </button>
+                        <div
+                            className="linkTxt animation"
+                            style={{ "--i": 5, "--j": 25 }}
+                        >
+                            <p>
+                                Don't have an account?
+                                <a
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        toggleForms();
+                                    }}
+                                    className="register-link"
                                 >
                                     Sign Up
-                                </button>
-                            </div>
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+
+                {/* Info Text for Login */}
+                <div className={`info-text login ${!isLogin ? "hide" : ""}`}>
+                    <h2 className="animation" style={{ "--i": 0, "--j": 20 }}>
+                        Welcome Back!
+                    </h2>
+                    <p className="animation" style={{ "--i": 1, "--j": 21 }}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Deleniti, rem?
+                    </p>
+                </div>
+
+                {/* Register Form */}
+                <div className={`form-box register ${isLogin ? "hide" : ""}`}>
+                    <h2
+                        className="title animation"
+                        style={{ "--i": 17, "--j": 0 }}
+                    >
+                        Sign Up
+                    </h2>
+                    <form action="#" onSubmit={handleRegister}>
+                        <div
+                            className="input-box animation"
+                            style={{ "--i": 18, "--j": 1 }}
+                        >
+                            <input
+                                type="text"
+                                // placeholder="Name"
+                                name="name"
+                                required
+                                value={formData.name}
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="">Username</label>
+                            <i className="bx bxs-user"></i>
+                        </div>
+
+                        <div
+                            className="input-box animation"
+                            style={{ "--i": 19, "--j": 2 }}
+                        >
+                            <input
+                                type="email"
+                                // placeholder="Email"
+                                name="email"
+                                required
+                                value={formData.email}
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="">Email</label>
+                            <i className="bx bxs-envelope"></i>
+                        </div>
+
+                        <div
+                            className="input-box animation"
+                            style={{ "--i": 20, "--j": 3 }}
+                        >
+                            <input
+                                type="password"
+                                // placeholder="Password"
+                                name="password"
+                                required
+                                value={formData.password}
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="">Password</label>
+                            <i className="bx bxs-lock-alt"></i>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="btn animation"
+                            style={{ "--i": 21, "--j": 4 }}
+                        >
+                            Sign Up
+                        </button>
+                        <div
+                            className="linkTxt animation"
+                            style={{ "--i": 22, "--j": 5 }}
+                        >
+                            <p>
+                                Already have an account?
+                                <a
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        toggleForms();
+                                    }}
+                                    className="login-link"
+                                >
+                                    Login
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+
+                {/* Info Text for Register */}
+                <div className={`info-text register ${isLogin ? "hide" : ""}`}>
+                    <h2 className="animation" style={{ "--i": 17, "--j": 0 }}>
+                        Welcome Friend!
+                    </h2>
+                    <p className="animation" style={{ "--i": 18, "--j": 1 }}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Deleniti, rem?
+                    </p>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div className="Logincontainer">
+                        <div className="logincontainer-content">
+                            <form
+                                className="loginform"
+                                onSubmit={
+                                    showLogin ? handleLogin : handleRegister
+                                }
+                               
+                            >
+                                <div className="logindescr">
+                                    {showLogin ? "Login" : "SignUp"}
+                                </div>
+
+                                {/* Show username field only for sign-up */}
+                                {!showLogin && (
+                                    <div className="logininput">
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                        <label htmlFor="Username">
+                                            Username
+                                        </label>
+                                    </div>
+                                )}
+
+                                <div className="logininput">
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    <label htmlFor="email">Email</label>
+                                </div>
+
+                                <div className="logininput">
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    <label htmlFor="password">Password</label>
+                                </div>
+
+                                <div className="button">
+                                    <button type="submit">
+                                        {showLogin ? "Login" : "Sign Up"}
+                                    </button>
+                                </div>
+
+                                <p className="link">
+                                    {showLogin ? (
+                                        <>
+                                            Don't have an account?
+                                            <a onClick={handleSignupClick}>
+                                                Sign up
+                                            </a>
+                                        </>
+                                    ) : (
+                                        <>
+                                            Already have an account?
+                                            <a onClick={handleLoginClick}>
+                                                Login
+                                            </a>
+                                        </>
+                                    )}
+                                </p>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div>
-                <BottomSection />
-            </div>
+            <BottomSection />
         </div>
     );
-}
+};
 
-export default Loginpage;
+export default App;

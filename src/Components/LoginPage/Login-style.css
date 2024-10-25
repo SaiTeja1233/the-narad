@@ -1,212 +1,445 @@
+:root {
+    --white: #fff;
+    --black: #000000;
+    --lightBulue: rgb(28, 79, 248);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
-.main-login-cont {
-    /* background: linear-gradient(to right, #e2e2e2, #c9d6ff); */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 90vh;
-}
-
-.container {
-    background-color: #ffffff;
-    border-radius: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+.wrapper {
+    margin: 9% auto;
     position: relative;
+    width: 750px;
+    height: 450px;
+    background-color: var(--white);
+    border: 2px solid var(--black);
+    border-radius: 0px;
+    box-shadow: 0 0 20px var(--black);
     overflow: hidden;
-    width: 60%;
-    height: 80vh;
 }
 
-.container p {
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.3px;
-    margin: 20px 0;
-}
-
-.container span {
-    font-size: 12px;
-}
-
-.container a {
-    color: #333;
-    font-size: 13px;
-    text-decoration: none;
-    margin: 15px 0 10px;
-}
-
-.container button {
-    background-color: #d477e9;
-    color: #fff;
-    font-size: 12px;
-    padding: 10px 45px;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.container button.hidden {
-    background-color: transparent;
-    border-color: #fff;
-}
-
-.container form {
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 40px;
-    height: 100%;
-}
-
-.container input {
-    background-color: #eee;
-    border: none;
-    margin: 8px 0;
-    padding: 10px 15px;
-    font-size: 13px;
-    border-radius: 8px;
-    width: 100%;
-    outline: none;
-}
-
-.form-container {
+.wrapper .form-box {
     position: absolute;
     top: 0;
+    width: 50%;
     height: 100%;
-    transition: all 0.6s ease-in-out;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
-.sign-in {
+.wrapper .form-box.login {
     left: 0;
-    width: 50%;
-    z-index: 2;
+    padding: 0 60px 0 40px;
 }
 
-.container.active .sign-in {
-    transform: translateX(100%);
+.form-box h2 {
+    margin-bottom: 10px;
+    position: relative;
+    font-size: 32px;
+    color: var(--black);
+    text-align: center;
 }
 
-.sign-up {
+.form-box h2::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: var(--black);
+}
+
+.form-box .input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 25px 0;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    color: var(--black);
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid var(--black);
+    transition: 0.5s;
+    padding-right: 23px;
+}
+
+.input-box input:focus,
+.input-box input:valid {
+    border-bottom-color: var(--lightBulue);
+}
+
+.input-box label {
+    position: absolute;
+    top: 50%;
     left: 0;
-    width: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: var(--black);
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+    top: -5px;
+    color: var(--lightBulue);
+}
+
+.input-box i {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 18px;
+    transition: 0.5s;
+}
+
+.input-box input:focus ~ i,
+.input-box input:valid ~ i {
+    color: var(--lightBulue);
+}
+
+form button {
+    width: 100%;
+    height: 45px;
+    background-color: var(--black);
+    color: var(--white);
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+form button:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+form .linkTxt {
+    font-size: 14px;
+    color: var(--black);
+    text-align: center;
+    margin: 20px 0 10px;
+}
+
+.linkTxt p a {
+    color: blue;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.wrapper .form-box.login .animation {
+    transform: translateX(0);
+    transition: 0.7s ease;
+    opacity: 1;
+    filter: blur(0);
+    transition-delay: calc(0.1s * var(--j));
+}
+
+.wrapper.active .form-box.login .animation {
+    transform: translateX(-120%);
     opacity: 0;
+    filter: blur(10px);
+    transition-delay: calc(0.1s * var(--i));
+}
+
+.wrapper .info-text {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.wrapper .info-text.login {
+    right: 0;
+    text-align: right;
+    padding: 0 40px 60px 150px;
+}
+
+.wrapper .info-text h2 {
+    font-size: 36px;
+    color: var(--white);
+    line-height: 1.3;
+    text-transform: uppercase;
+    z-index: 5;
+}
+
+.wrapper .info-text p {
+    font-size: 16px;
+    color: var(--white);
+    z-index: 5;
+}
+
+.wrapper .info-text.login .animation {
+    transform: translateX(0);
+    opacity: 1;
+    filter: blur(0);
+    transition: 0.7s ease;
+    transition-delay: calc(0.1s * var(--j));
+    z-index: 5;
+}
+.wrapper.active .info-text.login .animation {
+    transform: translateX(120px);
+    opacity: 0;
+    filter: blur(10px);
+    transition: 0.7s ease;
+    transition-delay: calc(0.1s * var(--i));
+}
+
+.wrapper .rotate-bg {
+    position: absolute;
+    top: -4px;
+    right: 0;
+    width: 850px;
+    height: 600px;
+    background: #000000;
+    transform: rotate(10deg) skewY(40deg);
+    transform-origin: bottom right;
+    transition: 1.5s ease;
+    transition-delay: 1.6s;
     z-index: 1;
 }
 
-.container.active .sign-up {
-    transform: translateX(100%);
-    opacity: 1;
+.wrapper.active .rotate-bg {
+    transform: rotate(0) skewY(0);
+    transition-delay: 0.5s;
+}
+
+.wrapper .form-box.register {
     z-index: 5;
-    animation: move 0.6s;
-}
+    padding: 0 40px 0 60px;
 
-@keyframes move {
-    0%,
-    49.99% {
-        opacity: 0;
-        z-index: 1;
-    }
-    50%,
-    100% {
-        opacity: 1;
-        z-index: 5;
-    }
-}
-
-.social-icons {
-    margin: 20px 0;
-}
-
-.social-icons a {
-    border: 1px solid #ccc;
-    border-radius: 20%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 3px;
-    width: 40px;
-    height: 40px;
-}
-
-.toggle-container {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-    transition: all 0.6s ease-in-out;
-    border-radius: 150px 0 0 100px;
-    z-index: 100;
-}
-
-.container.active .toggle-container {
-    transform: translateX(-100%);
-    border-radius: 0 150px 100px 0;
-}
-
-.toggle {
-    background-color: #854f6c;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        rgba(186, 66, 255) 35%,
-        rgba(0, 225, 255)
-    );
-    color: #fff;
-    position: relative;
-    left: -100%;
-    height: 100%;
-    width: 200%;
-    transform: translateX(0);
-    transition: all 0.6s ease-in-out;
-}
-
-.container.active .toggle {
-    transform: translateX(50%);
-}
-
-.toggle-panel {
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 30px;
-    text-align: center;
-    top: 0;
-    transform: translateX(0);
-    transition: all 0.6s ease-in-out;
-}
-
-.toggle-left {
-    transform: translateX(-200%);
-}
-
-.container.active .toggle-left {
-    transform: translateX(0);
-}
-
-.toggle-right {
     right: 0;
-    transform: translateX(0);
 }
 
-.container.active .toggle-right {
-    transform: translateX(200%);
+.wrapper.active .form-box.register {
+    pointer-events: auto;
+}
+
+.wrapper .form-box.register .animation {
+    transform: translateX(120%);
+    opacity: 0;
+    filter: blur(10px);
+    transition: 0.7s ease;
+    transition-delay: calc(0.1s * var(--j));
+}
+
+.wrapper.active .form-box.register .animation {
+    transform: translateX(0);
+    opacity: 1;
+    filter: blur(0);
+    transition-delay: calc(0.1s * var(--i));
+}
+
+.wrapper .info-text.register {
+    left: 0;
+    text-align: left;
+    padding: 0 150px 60px 40px;
+    pointer-events: none;
+}
+
+.wrapper.active .info-text.register {
+    pointer-events: auto;
+}
+
+.wrapper .info-text.register .animation {
+    transform: translateX(-120%);
+    opacity: 0;
+    filter: blur(10px);
+    transition: 0.7s ease;
+    transition-delay: calc(0.1s * var(--j));
+}
+
+.wrapper.active .info-text.register .animation {
+    transform: translateX(0);
+    opacity: 1;
+    filter: blur(0);
+    transition-delay: calc(0.1s * var(--i));
+}
+
+.login {
+    border-radius: 0;
+    background: #ffffff;
+}
+
+.wrapper .rotate-bg2 {
+    position: absolute;
+    top: 100%;
+    left: 250px;
+    width: 850px;
+    height: 700px;
+    background: var(--white);
+    transform: rotate(0) skewY(0);
+    transform-origin: bottom left;
+    transition: 1.5s ease;
+    transition-delay: 0.5s;
+    z-index: 2;
+}
+
+.wrapper.active .rotate-bg2 {
+    transform: rotate(-11deg) skewY(-40deg);
+    transition-delay: 1.2s;
+}
+.Logincontainer {
+    display: none;
+}
+
+@media only screen and (max-width: 767px) {
+    .wrapper {
+        display: none;
+    }
+
+    .wrapper .form-box {
+        display: none;
+    }
+
+    .Logincontainer {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        background: transparent;
+    }
+
+    .Logincontainer form .logindescr {
+        font-size: 20px;
+        font-weight: 500;
+        color: #e8e8e8;
+        margin-bottom: 25px;
+        margin-top: 25px;
+        text-align: center;
+    }
+
+    .loginform {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 2%;
+        height: 80vh;
+    }
+
+    .logininput,
+    textarea {
+        margin: 1em 0 1em 0;
+        width: 300px;
+        position: relative;
+    }
+
+    .logininput input {
+        font-size: 100%;
+        padding: 0.7em;
+        outline: none;
+        color: #e8e8e8;
+        border: none;
+        border-bottom: 2px solid #e8e8e8;
+        background: transparent;
+        border-radius: none;
+        width: 100%;
+        resize: none;
+    }
+
+    .logininput label {
+        font-size: 100%;
+        position: absolute;
+        left: 0;
+        color: #e8e8e8;
+        padding: 0.7em;
+        margin-left: 0.1em;
+        pointer-events: none;
+        transition: all 0.5s ease;
+        text-transform: uppercase;
+    }
+
+    .logininput :is(input:focus, input:valid) ~ label {
+        transform: translateY(-50%) scale(0.9);
+        color: aqua;
+        margin: 0em;
+        padding: 0.4em;
+        background: transparent;
+    }
+
+    .logininput textarea:focus ~ label,
+    .logininput textarea:valid ~ label {
+        transform: translateY(-50%) scale(0.9);
+        margin: 0em;
+        padding: 0.4em;
+        background: transparent;
+    }
+
+    .button {
+        margin-top: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loginform button {
+        color: #e8e8e8;
+        font-size: 15px;
+        align-self: flex-start;
+        border: none;
+        cursor: pointer;
+        margin-bottom: 50px;
+        background: transparent;
+        transition: all 0.3s ease-in-out;
+        position: relative;
+        overflow: hidden;
+    }
+    .loginform p {
+        color: #ffffff;
+        /* position: absolute; */
+        /* top: 75vh; */
+        font-size: 1rem;
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+            "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    }
+    .loginform p a {
+        color: #8b51ff;
+        font-size: 1.2rem;
+        margin-left: 3%;
+    }
+
+    .loginform button:before {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #e8e8e8;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .loginform button:hover:before {
+        opacity: 0.2;
+    }
+
+    .loginform button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.525);
+    }
 }

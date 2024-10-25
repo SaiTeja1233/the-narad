@@ -1,86 +1,258 @@
+/* General styles */
 * {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
 }
+
 body {
-    background-color: #150628;
-    margin-top: 3.9%;
+    background-color: #212121;
     width: 100%;
+}
+.Nav-logo {
+    /* border: 1px solid white; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2%;
+}
+/* From Uiverse.io by devkatyall */
+.shine {
+    font-size: 2em;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.3);
+    background: #222 -webkit-gradient(
+            linear,
+            left top,
+            right top,
+            from(#222),
+            to(#222),
+            color-stop(0.5, #fff)
+        ) 0 0 no-repeat;
+    background-image: -webkit-linear-gradient(
+        -40deg,
+        transparent 0%,
+        transparent 40%,
+        #fff 50%,
+        transparent 60%,
+        transparent 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-background-size: 50px;
+    -webkit-animation: zezzz;
+    -webkit-animation-duration: 5s;
+    -webkit-animation-iteration-count: infinite;
+}
+@-webkit-keyframes zezzz {
+    0%,
+    10% {
+        background-position: -200px;
+    }
+    20% {
+        background-position: top left;
+    }
+    100% {
+        background-position: 200px;
+    }
 }
 
 .Navbar {
     position: fixed;
     top: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+.Navbar.scrolled {
+    background-color: rgba(0, 0, 0, 0.8); /* Change this to the desired color */
+}
+.Navbar {
+    position: fixed;
+    top: 0;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-    backdrop-filter: blur(10px);
-    /* background-color: transparent; */
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 60px;
-    padding: 20px;
+    height: 9vh;
+    padding: 2% 0 2% 0;
     z-index: 1000;
-    /* background-color: rgba(58, 153, 255, 0.244); */
 }
+
 .nav-img {
     height: 50px;
     width: 80px;
 }
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding: 2% 5% 3% 0; */
+}
+
+/* Links */
 .links {
     display: flex;
+    align-items: center;
     list-style: none;
-    margin-top: 3%;
+    justify-content: center;
+    gap: 20%;
+    margin-right: 70%;
 }
+
 ul a {
     text-decoration: none;
     color: rgb(255, 255, 255);
     padding: 20px;
     margin: 5px auto;
 }
+
 ul a:hover {
+    color: rgb(148, 148, 148);
+}
+
+.log-btn > li:hover {
     color: rgb(148, 148, 148);
 }
 
 li {
     font-size: 18px;
-    color: #e1e1e1;
-    font-family: inherit;
-    /* font-weight: 600; */
+    color: #ffffff;
     cursor: pointer;
     position: relative;
     border: none;
     background: none;
     text-transform: uppercase;
-    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
-    transition-duration: 400ms;
-    transition-property: color;
+    transition: color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-li:focus,
-li:hover {
-    color: #fff;
+li:after {
+    content: "";
+    bottom: -2px;
+    left: 50%;
+    position: absolute;
+    width: 0;
+    height: 4.5px;
+    border-radius: 5px;
+    background-color: white;
+    transition: width 0.4s, left 0.4s;
 }
 
 li:focus:after,
 li:hover:after {
     width: 100%;
-    left: 0%;
+    left: 0;
 }
 
-li:after {
-    content: "";
-    pointer-events: none;
-    bottom: -2px;
-    left: 50%;
-    position: absolute;
-    width: 0%;
-    height: 4.5px;
-    border-radius: 5px;
-    background-color: white;
-    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
-    transition-duration: 400ms;
-    transition-property: width, left;
+/* Toggle button styles */
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: inline-block;
+}
+
+#checkbox {
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .links {
+        gap: 5%;
+        margin-right: 30%;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .Navbar {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    #checkbox {
+        display: none;
+    }
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100%;
+        background-color: #121212de;
+        transition: right 0.5s;
+    }
+
+    .links {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 15%;
+        height: 80%;
+        margin-right: 0;
+    }
+
+    .toggle {
+        position: relative;
+        width: 30px;
+        height: 40px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        z-index: 400;
+        left: -2%;
+    }
+
+    .bars {
+        width: 100%;
+        height: 4px;
+        background-color: rgb(176, 92, 255);
+        border-radius: 4px;
+        transition: transform 0.5s ease, width 0.5s ease;
+    }
+
+    #bar1,
+    #bar3 {
+        width: 70%;
+    }
+
+    /* Cross button when checkbox is checked */
+    #checkbox:checked + .toggle .bars {
+        position: absolute;
+        transition-duration: 0.5s;
+    }
+    #checkbox:checked + .toggle #bar1 {
+        transform: rotate(45deg);
+        width: 100%;
+    }
+
+    #checkbox:checked + .toggle #bar3 {
+        transform: rotate(-45deg);
+        width: 100%;
+    }
+
+    #checkbox:checked + .toggle #bar2 {
+        transform: scaleX(0);
+    }
+
+    /* Smooth animation */
+    #checkbox:checked + .toggle {
+        transform: rotate(180deg);
+    }
+
+    /* Ensure the menu slides in */
+    #checkbox:checked ~ .nav-links {
+        right: 0;
+    }
+
+    .log-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
