@@ -1,7 +1,7 @@
 import React from "react";
-import { useCallback } from "react";
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
+// import { useCallback } from "react";
+// import Particles from "react-tsparticles";
+// import { loadFull } from "tsparticles";
 import "./Background.css";
 import Loginpage from "../LoginPage/Loginpage";
 
@@ -103,7 +103,7 @@ function Background() {
                 }}
             /> */}
             <div className="log">
-                <Loginpage />
+                <Loginpage />   
             </div>
         </div>
     );
