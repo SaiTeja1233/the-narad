@@ -6,15 +6,15 @@ import "./Background.css";
 import Loginpage from "../LoginPage/Loginpage";
 
 function Background() {
-    const particlesLoaded = useCallback(async (container) => {
-        await console.log(container);
-    }, []);
-    const particlesInit = useCallback(async (engine) => {
-        await loadFull(engine);
-    }, []);
+    // const particlesLoaded = useCallback(async (container) => {
+    //     await console.log(container);
+    // }, []);
+    // const particlesInit = useCallback(async (engine) => {
+    //     await loadFull(engine);
+    // }, []);
     return (
         <div className="Background">
-            <Particles
+            {/* <Particles
                 id="tsparticles"
                 init={particlesInit}
                 loaded={particlesLoaded}
@@ -101,7 +101,7 @@ function Background() {
                     },
                     retina_detect: true,
                 }}
-            />
+            /> */}
             <div className="log">
                 <Loginpage />
             </div>
