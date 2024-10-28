@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 
 const VideoCont = () => {
     return (
-        <div className="video-container" style={{ color: "white" }}>
+        <div className="Homevideo-container" style={{ color: "white" }}>
             <video
                 style={{
                     width: "100%",

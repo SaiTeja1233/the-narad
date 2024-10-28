@@ -184,7 +184,7 @@ input:checked + .slider:after {
 }
 
 .popup-content {
-    background-color: white;
+    background-color: #212121;
     padding: 20px;
     border-radius: 8px;
     width: 300px;
@@ -750,8 +750,47 @@ p {
         height: 30vh;
     }
 }
-.videoContainer {
-    /* width: 30%; */
-    /* border: 1px solid white; */
-    height: 30vh;
+
+.video-container {
+    width: 10%;
+    height: 20vh;
+    position: fixed; /* Fix position to the viewport */
+    top: 10%; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+
+    background-color: rgba(
+        255,
+        255,
+        255,
+        0.8
+    ); /* Optional: semi-transparent background */
+    border: 1px solid #ccc; /* Optional: border */
+    border-radius: 5px; /* Optional: rounded corners */
+    /* padding: 10px; Optional: padding */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Optional: shadow for better visibility */
+}
+
+.close-video-button {
+    position: absolute;
+    top: 5px; /* Position close button at the top */
+    right: 5px; /* Position close button at the right */
+    background: transparent;
+    border: none;
+    font-size: 16px; /* Adjust size as needed */
+    cursor: pointer;
+    z-index: 1000; /* Make sure it appears above other content */
+}
+
+.story5-content,
+.story4-content,
+.story3-content,
+.story2-content {
+    border: 1px solid black;
+    font-size: 1.5rem;
+    text-align: center;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2% 10%;
 }
