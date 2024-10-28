@@ -33,19 +33,22 @@ const App = () => {
         }));
     };
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            await account.createEmailPasswordSession(
-                formData.email,
-                formData.password
-            );
-            navigate("/books");
-        } catch (error) {
-            console.error("Login failed:", error.message);
-            alert("Login failed: " + error.message); // Display error message to the user
-        }
-    };
+  const handleLogin = async (e) => {
+      e.preventDefault();
+      try {
+          const session = await account.createEmailPasswordSession(
+              formData.email,
+              formData.password
+          );
+          localStorage.setItem("user", JSON.stringify(session));
+          navigate("/books");
+          window.location.reload(); // Refresh the page
+      } catch (error) {
+          console.error("Login failed:", error.message);
+          alert("Login failed: " + error.message);
+      }
+  };
+
 
     const handleRegister = async (e) => {
         e.preventDefault();
