@@ -41,9 +41,9 @@ const App = () => {
                 formData.password
             );
             navigate("/books");
-            window.location.reload();
         } catch (error) {
-            console.error("Login failed:", error);
+            console.error("Login failed:", error.message);
+            alert("Login failed: " + error.message); // Display error message to the user
         }
     };
 
@@ -57,9 +57,11 @@ const App = () => {
             );
             await handleLogin(e); // Automatically login after registration
         } catch (error) {
-            console.error("Registration failed:", error);
+            console.error("Registration failed:", error.message);
+            alert("Registration failed: " + error.message); // Display error message to the user
         }
     };
+
     // State to manage login/register toggle
 
     // Function to toggle forms
