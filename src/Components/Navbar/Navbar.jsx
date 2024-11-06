@@ -23,13 +23,12 @@ function Navbar() {
             }
         };
 
-        // Check session only if user state is null
-        if (!user) checkUserSession();
-    }, [user]);
+        // Run only on initial mount
+        checkUserSession();
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 0);
-
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
@@ -41,12 +40,14 @@ function Navbar() {
             localStorage.removeItem("user");
             navigate("/loginpage");
         } catch (error) {
-            console.error("Logout failed:", error);
+            console.warn(
+                "Logout failed. Possibly already logged out:",
+                error.message
+            );
         }
     };
 
     const handleLogin = () => {
-        
         navigate("/loginpage");
     };
 

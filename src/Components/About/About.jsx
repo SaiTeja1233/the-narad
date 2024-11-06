@@ -1,14 +1,17 @@
-
 import React from "react";
 import "./About-style.css";
 import Aboutanim3 from "./topAboutanim/Aboutanm3";
 import Aboutanim1 from "./topAboutanim/Aboutanim1";
 import Aboutanim2 from "./topAboutanim/Aboutanim2";
 import BottomSection from "../BottomSection/BottomSection";
+import BackToTopButton from "../BackToTop/BackToTop";
 
 function About() {
     return (
         <div className="about">
+            <div className="backTotopButton">
+                <BackToTopButton />
+            </div>
             <div className="about-main-top">
                 <div className="about-top-headline">
                     <h1>ABOUT US</h1>

@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Components/Home/Home";
 import Books from "./Components/Books/Books";
@@ -10,10 +9,12 @@ import FlipBook from "./flipBook";
 import BooksScroll from "./Components/Books/BooksScroll";
 import Background from "./Components/Background/Background";
 import RippleEffect from "./Components/Navbar/RippleEffect";
+import ScrollToTop from "./Components/ScrollToTop/ScrollToTop";
 
 export default function App() {
     return (
         <BrowserRouter>
+            <ScrollToTop />
             <Navbar />
             <RippleEffect />
             <Routes>
@@ -24,7 +25,7 @@ export default function App() {
                 <Route path="/books" element={<Books />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/loginpage" element={<Background/>} />
+                <Route path="/loginpage" element={<Background />} />
                 <Route path="*" element={<PagenotFound />} />
             </Routes>
         </BrowserRouter>

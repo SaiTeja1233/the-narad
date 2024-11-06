@@ -48,7 +48,7 @@
 }
 .animated-title > div div {
     color: #b6b6b6;
-    font-size: 4vw;
+    font-size: 3vw;
     padding: 2vmin 0;
     position: absolute;
 }
@@ -122,4 +122,38 @@
     .animated-title > div div span {
         width: 100%;
     }
+}
+
+.popup {
+    position: fixed;
+    top: 8%;
+    right: 20px;
+
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 2px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: slideInOut 3s ease;
+    background-color: #4caf50;
+}
+.popup > p {
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+@keyframes slideInOut {
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    } /* Start off-screen to the right */
+    10%,
+    90% {
+        opacity: 1;
+        transform: translateX(0);
+    } /* Slide into position */
+    100% {
+        opacity: 0;
+        transform: translateX(-100%);
+    } /* Slide off-screen to the left */
 }

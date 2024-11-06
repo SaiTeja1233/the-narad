@@ -14,8 +14,9 @@ const FlipBook = () => {
     const [selectedVoice, setSelectedVoice] = useState(null);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
-    const [videoSrc, setVideoSrc] = useState(""); // State for video source
-    const [videoElement, setVideoElement] = useState(null); // State for video element
+    const [videoSrc, setVideoSrc] = useState("");
+    const [videoElement, setVideoElement] = useState(null);
+    const [isVideoMaximized, setIsVideoMaximized] = useState(false);
     const popupRef = useRef(null);
     const utteranceRef = useRef(null);
     const flipPageRef = useRef(null);
@@ -25,7 +26,6 @@ const FlipBook = () => {
 
     const storyName = location.state?.story;
 
-    // Mapping of voice names to video URLs
     const voiceVideos = {
         "Microsoft David": "/malevid1.mp4",
         "Microsoft Mark": "/malevid2.mp4",
@@ -51,7 +51,7 @@ const FlipBook = () => {
             synth.cancel();
             setIsPlaying(false);
             if (videoElement) {
-                videoElement.pause(); // Pause video if audio is paused
+                videoElement.pause();
             }
         } else {
             const textContent = stripHTML(htmlContent);
@@ -87,7 +87,6 @@ const FlipBook = () => {
             textToSpeakRef.current = textContent;
             setIsPlaying(true);
 
-            // Play video when audio starts
             if (videoElement) {
                 videoElement.play();
             }
@@ -102,8 +101,8 @@ const FlipBook = () => {
 
     const handleVoiceSelect = (voice) => {
         setSelectedVoice(voice);
-        const baseVoiceName = voice.name.split(" - ")[0]; // Get base voice name
-        const videoUrl = voiceVideos[baseVoiceName]; // Get video URL from your mapping
+        const baseVoiceName = voice.name.split(" - ")[0];
+        const videoUrl = voiceVideos[baseVoiceName];
         if (videoUrl) {
             setVideoSrc(videoUrl);
         }
@@ -111,7 +110,7 @@ const FlipBook = () => {
             synthRef.current.cancel();
             setIsPlaying(false);
             if (videoElement) {
-                videoElement.pause(); // Pause video if switching voice
+                videoElement.pause();
             }
         }
     };
@@ -146,6 +145,27 @@ const FlipBook = () => {
         };
     }, [isPopupVisible]);
 
+    // Stop audio and video if the user navigates away from the Books page
+    useEffect(() => {
+        const stopAudioVideo = () => {
+            synthRef.current.cancel(); // Stop audio
+            setIsPlaying(false);
+            if (videoElement) {
+                videoElement.pause(); // Pause video
+            }
+        };
+
+        if (location.pathname !== "/books") {
+            stopAudioVideo();
+        }
+
+        return () => stopAudioVideo(); // Cleanup when component unmounts
+    }, [location.pathname]);
+
+    const toggleVideoContainerSize = () => {
+        setIsVideoMaximized((prev) => !prev);
+    };
+
     return (
         <div className="flip-book-container">
             <div className="flip-book">
@@ -159,7 +179,7 @@ const FlipBook = () => {
                     onPageChange={(pageIndex) => {
                         setCurrentPageIndex(pageIndex);
                         if (videoElement) {
-                            videoElement.play(); // Keep video playing when flipping pages
+                            videoElement.play();
                         }
                     }}
                 >
@@ -176,11 +196,14 @@ const FlipBook = () => {
                                     {pageIndex + 1} of{" "}
                                     {chapters[currentChapter].pages.length}
                                 </div>
+                                <div className="pageflip"></div>{" "}
+                                {/* Add the pageflip element here */}
                             </article>
                         )
                     )}
                 </FlipPage>
             </div>
+
             <button className="audio-control-button" onClick={togglePopup}>
                 <div className="button-text">Choose Avatar</div>
             </button>
@@ -227,13 +250,17 @@ const FlipBook = () => {
 
             {/* Video Playback Section */}
             {videoSrc && (
-                <div className="video-container">
+                <div
+                    className={`video-container ${
+                        isVideoMaximized ? "maximized" : "minimized"
+                    }`}
+                >
                     <button
                         className="close-video-button"
                         onClick={() => {
-                            setVideoSrc(""); // Set videoSrc to empty to close video
+                            setVideoSrc("");
                             if (videoElement) {
-                                videoElement.pause(); // Pause video when closing
+                                videoElement.pause();
                             }
                         }}
                     >
@@ -241,14 +268,47 @@ const FlipBook = () => {
                     </button>
                     <video
                         src={videoSrc}
-                        ref={setVideoElement} // Set video element reference
-                        // controls
+                        ref={setVideoElement}
                         style={{
                             width: "100%",
                             height: "100%",
                             objectFit: "cover",
-                        }} // Adjust size as needed
+                        }}
                     />
+                    <button
+                        onClick={toggleVideoContainerSize}
+                        className="toggle-size-button"
+                    >
+                        {isVideoMaximized ? (
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="black"
+                                className="bi bi-arrows-angle-contract"
+                                viewBox="0 0 16 16"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M.172 15.828a.5.5 0 0 0 .707 0l4.096-4.096V14.5a.5.5 0 0 0 1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 0 0 1h2.768L.172 15.121a.5.5 0 0 0 0 .707zm15.656-15.656a.5.5 0 0 0-.707 0l-4.096 4.096V1.5a.5.5 0 0 0-1 0v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-2.768l4.096-4.096a.5.5 0 0 0 0-.707z"
+                                />
+                            </svg>
+                        ) : (
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                class="bi bi-arrows-angle-expand"
+                                viewBox="0 0 16 16"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707"
+                                />
+                            </svg>
+                        )}
+                    </button>
                 </div>
             )}
         </div>

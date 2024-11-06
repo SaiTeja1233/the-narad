@@ -1,5 +1,4 @@
-import React from "react";
-// import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./Books-style.css";
 import BooksScroll from "./BooksScroll";
 import BottomSection from "../BottomSection/BottomSection";
@@ -13,11 +12,11 @@ function Books() {
                         <div className="text-top">
                             <div>
                                 <span>NARAD</span>
-                                <span>apple's design</span>
+                                <span>Discover, read, explore.</span>
                             </div>
                         </div>
                         <div className="text-bottom">
-                            <div>for the win!</div>
+                            <div>"Stories that inspire"</div>
                         </div>
                     </div>
                 </div>

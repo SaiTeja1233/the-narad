@@ -6,6 +6,7 @@ import HomeBooks from "./HomeBooksSec/HomeBooks";
 import VideoCont from "./Video_Cont/VideoCont";
 import AudioControl from "./Video_Cont/AudioControl";
 import Imageslider from "./Imageslider";
+import BackToTopButton from "../BackToTop/BackToTop";
 
 function Home() {
     const [homebooks, setHomebooks] = useState([
@@ -14,12 +15,14 @@ function Home() {
         { className: "story3", title: "Brownie", img: "story3.jpg" },
         { className: "story4", title: "The Connection", img: "story4.jpg" },
         { className: "story5", title: "Art of Living", img: "story5.jpg" },
-        { className: "story6", title: "Guns and Glory", img: "story6.jpg" },
+        // { className: "story6", title: "Guns and Glory", img: "story6.jpg" },
     ]);
 
     return (
         <div className="Home-cont">
-          
+            <div className="backTotopButton">
+                <BackToTopButton />
+            </div>
             <div className="home-video-cont">
                 <VideoCont />
             </div>
