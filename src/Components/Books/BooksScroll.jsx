@@ -12,7 +12,6 @@ function BooksScroll() {
     return (
         <div className="books">
             <div className="bookpage1">
-                <p className="text">World</p>
                 <div className="inner">
                     <div class="card">
                         <div className="top-card">
@@ -36,7 +35,6 @@ function BooksScroll() {
                 </div>
             </div>
             <div className="bookpage1">
-                <p className="text">World</p>
                 <div className="inner">
                     <div class="card">
                         <div className="top-card">
@@ -64,7 +62,6 @@ function BooksScroll() {
                 </div>
             </div>
             <div className="bookpage1">
-                <p className="text">World</p>
                 <div className="inner">
                     <div class="card">
                         <div className="top-card">
@@ -88,7 +85,6 @@ function BooksScroll() {
                 </div>
             </div>
             <div className="bookpage1">
-                <p className="text">World</p>
                 <div className="inner">
                     <div class="card">
                         <div className="top-card">
@@ -114,7 +110,6 @@ function BooksScroll() {
                 </div>
             </div>
             <div className="bookpage1">
-                <p className="text">World</p>
                 <div className="inner">
                     <div class="card">
                         <div className="top-card">

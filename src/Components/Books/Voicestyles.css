@@ -16,7 +16,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 80px;
+    gap: 90px;
 }
 
 .Voice-btn {
@@ -54,11 +54,11 @@
 
 .text {
     color: white;
-    height: 5vh;
+    height: 4vh;
     width: 100%;
     font-family: Montserrat;
     text-align: center;
-    font-size: 0.9em;
+    font-size: 1rem;
 }
 
 .button4:active {
@@ -88,6 +88,11 @@
 .voice-button-image {
     height: 8.7em;
     width: 8.7em;
+}
+.voice-name{
+    color: white;
+    font-size: 1rem;
+    text-align: center;
 }
 .video-popup {
     position: fixed;

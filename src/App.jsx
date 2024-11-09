@@ -10,6 +10,7 @@ import BooksScroll from "./Components/Books/BooksScroll";
 import Background from "./Components/Background/Background";
 import RippleEffect from "./Components/Navbar/RippleEffect";
 import ScrollToTop from "./Components/ScrollToTop/ScrollToTop";
+import ResetPassword from "./Components/LoginPage/ResetPassword";
 
 export default function App() {
     return (
@@ -26,6 +27,7 @@ export default function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/loginpage" element={<Background />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="*" element={<PagenotFound />} />
             </Routes>
         </BrowserRouter>

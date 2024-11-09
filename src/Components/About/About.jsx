@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import ScrollReveal from "scrollreveal";
+import { motion } from "framer-motion";
 import "./About-style.css";
 import Aboutanim3 from "./topAboutanim/Aboutanm3";
 import Aboutanim1 from "./topAboutanim/Aboutanim1";
@@ -7,16 +9,39 @@ import BottomSection from "../BottomSection/BottomSection";
 import BackToTopButton from "../BackToTop/BackToTop";
 
 function About() {
+    useEffect(() => {
+        // Initialize ScrollReveal animations
+        ScrollReveal().reveal(
+            ".about-main-top, .about-top-text, .about-mid-text1, .about-mid-text2, .about-mid-text3",
+            {
+                origin: "bottom",
+                distance: "50px",
+                duration: 1500,
+                delay: 500,
+                easing: "ease-in-out",
+                reset: false, // Set to true if you want the animations to reset on scroll
+            }
+        );
+    }, []);
+
     return (
-        <div className="about">
+        <motion.div
+            className="about"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+        >
             <div className="backTotopButton">
                 <BackToTopButton />
             </div>
-            <div className="about-main-top">
-                <div className="about-top-headline">
-                    <h1>ABOUT US</h1>
-                </div>
-            </div>
+            <motion.div
+                className="about-main-top"
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1 }}
+            >
+                <h1 className="about-top-headline">ABOUT US</h1>
+            </motion.div>
             <div className="about-top-text">
                 <p>
                     Welcome to Narad, where every story comes to life with a
@@ -30,12 +55,9 @@ function About() {
             </div>
             <div className="about-mid">
                 <div className="about-mid-text1">
-                    <div>
-                        <Aboutanim2 />
-                    </div>
+                    <Aboutanim2 />
                     <div className="text1">
                         <h1>Our Mission</h1>
-
                         <p>
                             We are driven by the belief that stories are not
                             just meant to be told—they're meant to be
@@ -52,7 +74,6 @@ function About() {
                 <div className="about-mid-text2">
                     <div className="text2">
                         <h1>Our Vision</h1>
-
                         <p>
                             At Narad, we envision a world where technology
                             brings stories to the forefront of digital
@@ -65,14 +86,10 @@ function About() {
                             individual who creates it.
                         </p>
                     </div>
-                    <div>
-                        <Aboutanim1 />
-                    </div>
+                    <Aboutanim1 />
                 </div>
                 <div className="about-mid-text3">
-                    <div>
-                        <Aboutanim3 />
-                    </div>
+                    <Aboutanim3 />
                     <div className="text3">
                         <h1>Our Platform</h1>
                         <p>
@@ -88,11 +105,9 @@ function About() {
                         </p>
                     </div>
                 </div>
-                <div className="">
-                    <BottomSection />
-                </div>
+                <BottomSection />
             </div>
-        </div>
+        </motion.div>
     );
 }
 

@@ -7,10 +7,15 @@ const voiceImages = {
     "Microsoft Mark": "/male2.png",
     "Microsoft Heera": "/femaleimg2.png",
     "Microsoft Zira": "/female1.png",
-    "Google US English": "femaleimg2.png",
-    "Google UK English Male": "/male2.png",
-    "Google UK English Female": "/google-uk-female.png",
-    // Add more mappings for additional voices here
+    "Google US English": "/femaleimg2.png",
+};
+
+// Map of original voice names to custom display names
+const voiceDisplayNames = {
+    "Microsoft David": "Sitaram",
+    "Microsoft Mark": "Arjun",
+    "Microsoft Heera": "Suryakantham",
+    "Microsoft Zira": "Aadhya",
 };
 
 const VoiceButtons = ({ onVoiceSelect }) => {
@@ -25,11 +30,9 @@ const VoiceButtons = ({ onVoiceSelect }) => {
             const filteredVoices = allVoices.filter((voice) =>
                 isMale
                     ? voice.name.startsWith("Microsoft David") ||
-                      voice.name.startsWith("Microsoft Mark") ||
-                      voice.name.startsWith("Google UK English Male")
+                      voice.name.startsWith("Microsoft Mark")
                     : voice.name.startsWith("Microsoft Zira") ||
-                      voice.name.startsWith("Microsoft Heera") ||
-                      voice.name.startsWith("Google US English")
+                      voice.name.startsWith("Microsoft Heera")
             );
             setVoices(filteredVoices);
         };
@@ -54,7 +57,10 @@ const VoiceButtons = ({ onVoiceSelect }) => {
     return (
         <div className="main">
             <div className="text">
-                Selected Voice: {selectedVoice ? selectedVoice : "None"}
+                Selected Avatar: {" "}
+                {selectedVoice
+                    ? voiceDisplayNames[selectedVoice.split(" - ")[0]]
+                    : "None"}
             </div>
             <div className="toggle-button-cont">
                 <button onClick={toggleVoiceGender} className="toggle-button">
@@ -65,9 +71,11 @@ const VoiceButtons = ({ onVoiceSelect }) => {
             </div>
             <div className="buttons">
                 {voices.map((voice, index) => {
+                    const baseVoiceName = voice.name.split(" - ")[0];
                     const imageSrc =
-                        voiceImages[voice.name.split(" - ")[0]] ||
-                        "/default-image.png"; // Match only the base name
+                        voiceImages[baseVoiceName] || "/default-image.png";
+                    const displayName =
+                        voiceDisplayNames[baseVoiceName] || baseVoiceName;
 
                     return (
                         <div className="Voice-btn" key={index}>
@@ -77,10 +85,11 @@ const VoiceButtons = ({ onVoiceSelect }) => {
                             >
                                 <img
                                     src={imageSrc}
-                                    alt={voice.name}
+                                    alt={displayName}
                                     className="voice-button-image"
                                 />
                             </button>
+                            <p className="voice-name">{displayName}</p>
                         </div>
                     );
                 })}

@@ -1,17 +1,17 @@
 .about {
     width: 100%;
     height: 100vh;
+    padding-top: 5%;
 }
-
 
 .about-top-text {
-    /* border: 1px solid white; */
     padding: 3% 10%;
 }
+
 .about-top-text > p {
     text-align: center;
     font-size: 1.2rem;
-    line-height: 1.2;
+    line-height: 1.5;
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
         "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
@@ -19,88 +19,74 @@
 .about-main-top > .about-top-headline {
     display: flex;
     justify-content: center;
-    margin-top: 10%;
-}
-.about-mid {
-    width: 100%;
-    height: 40svh;
+    margin-top: 5%;
 }
 
-.text1 > p {
-    font-size: 1.2rem;
-    line-height: 1.2;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+.about-mid {
+    width: 100%;
+    min-height: 60vh;
 }
+
 .about-mid-text1,
 .about-mid-text2,
 .about-mid-text3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4% 6% 4% 6%;
+    padding: 4% 6%;
     gap: 10%;
 }
-.text2,
-.text1,
-.text3 {
+
+.text1, .text2, .text3 {
     width: 60%;
     border-radius: 20px;
-}
-.text2 > p {
-    font-size: 1.2rem;
-    line-height: 1.2;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    text-align: left;
 }
 
-.text3 > p {
+.text1 > p, .text2 > p, .text3 > p {
     font-size: 1.2rem;
-    line-height: 1.2;
+    line-height: 1.5;
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
         "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 @media screen and (max-width: 1024px) {
-    .abouttext > p {
+    .about-top-text > p {
         font-size: 1.2rem;
     }
 }
+
 @media screen and (max-width: 760px) {
     .about-top-text > p {
         font-size: 1rem;
     }
+
     .about-mid-text1,
+    .about-mid-text2,
     .about-mid-text3 {
         flex-direction: column;
-        padding-top: 25%;
-    }
-    .about-mid-text2 {
-        padding-top: 20%;
-        flex-direction: column; /* Stack elements vertically on smaller screens */
+        padding-top: 5%;
     }
 
     .about-mid-text2 > div:first-child {
-        order: 2; /* Ensure the text appears second */
+        order: 2; /* Ensures text appears second */
     }
 
     .about-mid-text2 > div:last-child {
-        order: 1; /* Ensure Aboutanim1 appears first */
+        order: 1; /* Ensures Aboutanim1 appears first */
     }
 
-    .text3 > p,
-    .text2 > p,
-    .text1 > p {
+    .text1, .text2, .text3 {
+        width: 90%;
+        padding: 5% 0;
+        text-align: center;
+    }
+
+    .text1 > p, .text2 > p, .text3 > p {
         font-size: 1rem;
     }
-    .text2,
-    .text1,
-    .text3 {
-        width: 90%;
-        border-radius: 20px;
-        padding-top: 40%;
-    }
-    .about {
-        padding-top: 15%;
+
+    .about-main-top > .about-top-headline {
+        margin-top: 2%;
     }
 }

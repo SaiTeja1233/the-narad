@@ -48,10 +48,10 @@ const FlipBook = () => {
         const synth = synthRef.current;
 
         if (isPlaying) {
-            synth.cancel();
+            synth.cancel(); // Stop audio
             setIsPlaying(false);
             if (videoElement) {
-                videoElement.pause();
+                videoElement.pause(); // Pause video when audio stops
             }
         } else {
             const textContent = stripHTML(htmlContent);
@@ -64,9 +64,13 @@ const FlipBook = () => {
                 utterance.voice = selectedVoice;
             }
 
+            // Event when audio finishes naturally
             utterance.onend = () => {
                 setIsPlaying(false);
                 spokenLengthRef.current = 0;
+                if (videoElement) {
+                    videoElement.pause(); // Pause video when audio finishes
+                }
                 const nextPageIndex = pageIndex + 1;
                 if (nextPageIndex < chapters[currentChapter].pages.length) {
                     setCurrentPageIndex(nextPageIndex);
@@ -88,7 +92,7 @@ const FlipBook = () => {
             setIsPlaying(true);
 
             if (videoElement) {
-                videoElement.play();
+                videoElement.play(); // Play video only when audio is playing
             }
         }
     };
@@ -178,8 +182,10 @@ const FlipBook = () => {
                     page={currentPageIndex}
                     onPageChange={(pageIndex) => {
                         setCurrentPageIndex(pageIndex);
-                        if (videoElement) {
-                            videoElement.play();
+                        if (isPlaying && videoElement) {
+                            videoElement.play(); // Only play video if audio is playing
+                        } else if (videoElement) {
+                            videoElement.pause(); // Pause video if audio is not playing
                         }
                     }}
                 >
@@ -197,7 +203,6 @@ const FlipBook = () => {
                                     {chapters[currentChapter].pages.length}
                                 </div>
                                 <div className="pageflip"></div>{" "}
-                                {/* Add the pageflip element here */}
                             </article>
                         )
                     )}
@@ -290,7 +295,7 @@ const FlipBook = () => {
                             >
                                 <path
                                     fillRule="evenodd"
-                                    d="M.172 15.828a.5.5 0 0 0 .707 0l4.096-4.096V14.5a.5.5 0 0 0 1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 0 0 1h2.768L.172 15.121a.5.5 0 0 0 0 .707zm15.656-15.656a.5.5 0 0 0-.707 0l-4.096 4.096V1.5a.5.5 0 0 0-1 0v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-2.768l4.096-4.096a.5.5 0 0 0 0-.707z"
+                                    d="M3.636 0H8v1H4.707L8 4.293 7.293 5 4 1.707V5H3V.5a.5.5 0 0 1 .5-.5h.136zM12 10.5a.5.5 0 0 1 .5-.5h.5v4.5a.5.5 0 0 1-.5.5H8v-1h3.293L8 11.707l.707-.707L12 13.293V10.5z"
                                 />
                             </svg>
                         ) : (
@@ -298,13 +303,13 @@ const FlipBook = () => {
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="16"
                                 height="16"
-                                fill="currentColor"
-                                class="bi bi-arrows-angle-expand"
+                                fill="black"
+                                className="bi bi-arrows-angle-expand"
                                 viewBox="0 0 16 16"
                             >
                                 <path
-                                    fill-rule="evenodd"
-                                    d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707"
+                                    fillRule="evenodd"
+                                    d="M12.828.828v3.75H12V2.207L8.707 5.5 8 4.793 11.293 1.5H9.25V.828h3.578zM4 10.207l-1.5 1.5H2.707L6 8.207l.707.707L4.207 11.5h2.042v1H1.5v-3.75h1v2.042L5.293 9.5 4 10.793z"
                                 />
                             </svg>
                         )}

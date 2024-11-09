@@ -47,81 +47,97 @@ const App = () => {
     const handleSignupClick = () => {
         setShowLogin(false);
     };
-   const handleLogin = async (e) => {
-       e.preventDefault();
+    const handleLogin = async (e) => {
+        e.preventDefault();
 
-       if (!navigator.onLine) {
-           alert(
-               "You are not connected to the internet. Please check your connection."
-           );
-           return;
-       }
+        if (!navigator.onLine) {
+            alert(
+                "You are not connected to the internet. Please check your connection."
+            );
+            return;
+        }
 
-       setLoading(true);
+        // Email validation check
+        if (!isValidEmail(formData.email)) {
+            alert(
+                "Please enter a valid Gmail address (e.g., example@gmail.com)."
+            );
+            return; // Don't proceed if the email is invalid
+        }
 
-       try {
-           await account.createEmailPasswordSession(
-               formData.email,
-               formData.password
-           );
+        setLoading(true);
 
-           setTimeout(() => {
-               navigate("/books");
-               setLoading(false);
-               window.location.reload();
-           }, 3000);
-       } catch (error) {
-           console.error("Login failed:", error.message);
-           alert("Login failed: " + error.message);
-           setLoading(false);
-       }
-   };
+        try {
+            await account.createEmailPasswordSession(
+                formData.email,
+                formData.password
+            );
 
-   const handleRegister = async (e) => {
-       e.preventDefault();
+            setTimeout(() => {
+                navigate("/books"); // Navigate to books page
+                setLoading(false);
+                window.location.reload();
+            }, 3000);
+        } catch (error) {
+            console.error("Login failed:", error.message);
+            alert("Login failed: " + error.message);
+            setLoading(false);
+        }
+    };
 
-       if (!navigator.onLine) {
-           alert(
-               "You are not connected to the internet. Please check your connection."
-           );
-           return;
-       }
 
-       setLoading(true);
+    const handleRegister = async (e) => {
+        e.preventDefault();
 
-       setErrors({ name: "", email: "", password: "" });
+        if (!navigator.onLine) {
+            alert(
+                "You are not connected to the internet. Please check your connection."
+            );
+            return;
+        }
 
-       try {
-           await account.create(
-               formData.name,
-               formData.email,
-               formData.password
-           );
-           handleLogin(e);
-       } catch (error) {
-           console.error("Registration failed:", error.message);
+        // Email validation check before proceeding
+        if (!isValidEmail(formData.email)) {
+            alert(
+                "Please enter a valid Gmail address (e.g., example@gmail.com)."
+            );
+            return; // Don't proceed with registration or save data
+        }
 
-           if (error.message.includes("email")) {
-               setErrors((prevErrors) => ({
-                   ...prevErrors,
-                   email: "Email is already registered.",
-               }));
-           } else if (error.message.includes("password")) {
-               setErrors((prevErrors) => ({
-                   ...prevErrors,
-                   password: "Password validation failed.",
-               }));
-           } else {
-               setErrors((prevErrors) => ({
-                   ...prevErrors,
-                   name: "An unknown error occurred.",
-               }));
-           }
+        setLoading(true);
+        setErrors({ name: "", email: "", password: "" });
 
-           setLoading(false);
-       }
-   };
+        try {
+            // Save user data to Appwrite only if email is valid
+            await account.create(
+                formData.name,
+                formData.email,
+                formData.password
+            );
+            handleLogin(e); // Proceed with login if registration is successful
+        } catch (error) {
+            console.error("Registration failed:", error.message);
 
+            if (error.message.includes("email")) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    email: "Email is already registered.",
+                }));
+            } else if (error.message.includes("password")) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    password: "Password validation failed.",
+                }));
+            } else {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    name: "An unknown error occurred.",
+                }));
+            }
+
+            setLoading(false);
+        }
+    };
 
     const toggleForms = () => {
         setIsLogin(!isLogin);
@@ -137,12 +153,31 @@ const App = () => {
 
     const isValidUsername = (name) => name && name.length >= 3;
 
+
+    const handleForgotPassword = async () => {
+        if (!formData.email) {
+            alert("Please enter your email address first.");
+            return;
+        }
+
+        try {
+            await account.createRecovery(
+                formData.email,
+                "http://localhost:3000/reset-password"
+            );
+            alert("Password recovery email sent. Please check your inbox.");
+        } catch (error) {
+            console.error("Password recovery failed:", error.message);
+            alert("Password recovery failed: " + error.message);
+        }
+    };
+
     return (
         <div>
             {loading ? (
                 <Loading />
             ) : (
-                <div>
+                <div className="loginPage-mian">
                     <div className={`wrapper ${!isLogin ? "active" : ""}`}>
                         <span className="rotate-bg"></span>
                         <span className="rotate-bg2"></span>
@@ -241,6 +276,18 @@ const App = () => {
                                 >
                                     Login
                                 </button>
+                                <p>
+                                    <a
+                                        href="#"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleForgotPassword();
+                                        }}
+                                        className="forgot-password-link"
+                                    >
+                                        Forgot Password?
+                                    </a>
+                                </p>
 
                                 <div
                                     className="linkTxt animation"
