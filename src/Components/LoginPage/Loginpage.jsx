@@ -163,7 +163,7 @@ const App = () => {
         try {
             await account.createRecovery(
                 formData.email,
-                "http://localhost:3000/reset-password"
+                "http://narad.world/reset-password"
             );
             alert("Password recovery email sent. Please check your inbox.");
         } catch (error) {
