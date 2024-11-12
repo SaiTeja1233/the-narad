@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import "./Login-style.css";
 import BottomSection from "../BottomSection/BottomSection";
 import Loading from "./Loading";
+import { users} from "../../users.mjs";
 
 const App = () => {
     const [formData, setFormData] = useState({
@@ -23,12 +24,17 @@ const App = () => {
         const { name, value } = e.target;
 
         let error = "";
-        if (name === "name" && !isValidUsername(value)) {
-            error = "Username must be at least 3 characters.";
+        if (name === "name") {
+            // Check for spaces in the username
+            if (value.includes(" ")) {
+                error = "Username cannot contain spaces.";
+            } else if (!isValidUsername(value)) {
+                error = "Username must be at least 3 characters.";
+            }
         } else if (name === "email" && !isValidEmail(value)) {
             error = "Use a valid Gmail address (@gmail.com).";
         } else if (name === "password" && !isValidPassword(value)) {
-            error = "Password needs at least 8 characters";
+            error = "Password needs at least 8 characters.";
         }
         setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
     };
@@ -86,58 +92,95 @@ const App = () => {
     };
 
 
-    const handleRegister = async (e) => {
-        e.preventDefault();
+   const isUserIdTaken = async (userId) => {
+       try {
+           const response = await users.list();
+           console.log("Users List:", response.users);
 
-        if (!navigator.onLine) {
-            alert(
-                "You are not connected to the internet. Please check your connection."
-            );
-            return;
-        }
+           // Check if any user has the same $id as the provided userId
+           const userExists = response.users.some(
+               (user) => user.$id === userId
+           );
 
-        // Email validation check before proceeding
-        if (!isValidEmail(formData.email)) {
-            alert(
-                "Please enter a valid Gmail address (e.g., example@gmail.com)."
-            );
-            return; // Don't proceed with registration or save data
-        }
+           return userExists;
+       } catch (error) {
+           console.error("Error checking user ID:", error);
+           return false; // Return false if there's an error
+       }
+   };
+   const isUserEmailTaken = async (email) => {
+       try {
+           const response = await users.list();
+           console.log("Users List:", response.users);
 
-        setLoading(true);
-        setErrors({ name: "", email: "", password: "" });
+           // Check if any user has the same $id as the provided userId
+           const userEmailExists = response.users.some(
+               (user) => user.email === email
+           );
 
-        try {
-            // Save user data to Appwrite only if email is valid
-            await account.create(
-                formData.name,
-                formData.email,
-                formData.password
-            );
-            handleLogin(e); // Proceed with login if registration is successful
-        } catch (error) {
-            console.error("Registration failed:", error.message);
+           return userEmailExists;
+       } catch (error) {
+           console.error("Error checking user ID:", error);
+           return false; // Return false if there's an error
+       }
+   };
 
-            if (error.message.includes("email")) {
-                setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    email: "Email is already registered.",
-                }));
-            } else if (error.message.includes("password")) {
-                setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    password: "Password validation failed.",
-                }));
-            } else {
-                setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    name: "An unknown error occurred.",
-                }));
-            }
+   const handleRegister = async (e) => {
+       e.preventDefault();
 
-            setLoading(false);
-        }
-    };
+       if (!navigator.onLine) {
+           alert("Please check your internet connection.");
+           return;
+       }
+
+       // Validation checks for email, etc.
+       if (!isValidEmail(formData.email)) {
+           alert(
+               "Please enter a valid Gmail address (e.g., example@gmail.com)."
+           );
+           return;
+       }
+
+       setLoading(true);
+       setErrors({ name: "", email: "", password: "" });
+
+       // Check if user ID is already taken
+       const userIdTaken = await isUserIdTaken(formData.name); // Assuming `name` is the user ID
+       if (userIdTaken) {
+           setErrors((prevErrors) => ({
+               ...prevErrors,
+               name: "This username is already taken. Please choose a different one.",
+           }));
+           
+           
+           setLoading(false);
+           return;
+       }
+        const userEmailExists = await isUserEmailTaken(formData.email);
+       if (userEmailExists) {
+           setErrors((prevErrors) => ({
+               ...prevErrors,
+               email: "This email is already taken. Please choose a different one.",
+           }));
+
+           setLoading(false);
+           return;
+       }
+
+       try {
+           await account.create(
+               formData.name,
+               formData.email,
+               formData.password
+           );
+           handleLogin(e); // Proceed with login if registration is successful
+       } catch (error) {
+           console.error("Registration failed:", error.message);
+           setLoading(false);
+       }
+   };
+
+
 
     const toggleForms = () => {
         setIsLogin(!isLogin);
@@ -152,7 +195,6 @@ const App = () => {
     };
 
     const isValidUsername = (name) => name && name.length >= 3;
-
 
     const handleForgotPassword = async () => {
         if (!formData.email) {
