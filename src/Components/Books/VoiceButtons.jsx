@@ -14,7 +14,7 @@ const voiceImages = {
 const voiceDisplayNames = {
     "Microsoft David": "Sitaram",
     "Microsoft Mark": "Arjun",
-    "Google US English": "Suryakantham",
+    "Microsoft Heera": "Suryakantham",
     "Microsoft Zira": "Aadhya",
 };
 
@@ -31,8 +31,8 @@ const VoiceButtons = ({ onVoiceSelect }) => {
                 isMale
                     ? voice.name.startsWith("Microsoft David") ||
                       voice.name.startsWith("Microsoft Mark")
-                    : voice.name.startsWith("Google US English") ||
-                      voice.name.startsWith("Microsoft Zira")
+                    : voice.name.startsWith("Microsoft Zira") ||
+                      voice.name.startsWith("Microsoft Heera")
             );
             setVoices(filteredVoices);
         };
@@ -57,7 +57,7 @@ const VoiceButtons = ({ onVoiceSelect }) => {
     return (
         <div className="main">
             <div className="text">
-                Selected Avatar:{" "}
+                Selected Avatar: {" "}
                 {selectedVoice
                     ? voiceDisplayNames[selectedVoice.split(" - ")[0]]
                     : "None"}
