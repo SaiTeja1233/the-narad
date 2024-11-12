@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import "./Login-style.css";
 import BottomSection from "../BottomSection/BottomSection";
 import Loading from "./Loading";
-import { users} from "../../users.mjs";
+import { users } from "../../users.mjs";
 
 const App = () => {
     const [formData, setFormData] = useState({
@@ -17,25 +17,58 @@ const App = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
+    const [loadingUsername, setLoadingUsername] = useState(false);
+    const [loadingEmail, setLoadingEmail] = useState(false);
 
     const [errors, setErrors] = useState({ name: "", email: "", password: "" });
 
-    const handleBlur = (e) => {
+    const handleBlur = async (e) => {
         const { name, value } = e.target;
-
         let error = "";
+
         if (name === "name") {
-            // Check for spaces in the username
+            setLoadingUsername(true); // Set loading to true for username
+            const userIdTaken = await isUserIdTaken(value);
+            if (userIdTaken) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    name: "This username is already exists.",
+                }));
+                setLoadingUsername(false); // Set loading to false after check
+                return;
+            }
+            // Additional username validation
             if (value.includes(" ")) {
                 error = "Username cannot contain spaces.";
             } else if (!isValidUsername(value)) {
                 error = "Username must be at least 3 characters.";
             }
-        } else if (name === "email" && !isValidEmail(value)) {
-            error = "Use a valid Gmail address (@gmail.com).";
-        } else if (name === "password" && !isValidPassword(value)) {
+            setLoadingUsername(false); // Set loading to false after validation
+        }
+
+        if (name === "email") {
+            setLoadingEmail(true); // Set loading to true for email
+            const userEmailExists = await isUserEmailTaken(value);
+            if (userEmailExists) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    email: "This email is already exists.",
+                }));
+                setLoadingEmail(false); // Set loading to false after check
+                return;
+            }
+            // Additional email validation
+            if (!isValidEmail(value)) {
+                error = "Use a valid Gmail address (@gmail.com).";
+            }
+            setLoadingEmail(false); // Set loading to false after validation
+        }
+
+        // Password validation
+        if (name === "password" && !isValidPassword(value)) {
             error = "Password needs at least 8 characters.";
         }
+
         setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
     };
 
@@ -91,96 +124,71 @@ const App = () => {
         }
     };
 
+    const isUserIdTaken = async (userId) => {
+        try {
+            const response = await users.list();
+            console.log("Users List:", response.users);
 
-   const isUserIdTaken = async (userId) => {
-       try {
-           const response = await users.list();
-           console.log("Users List:", response.users);
+            // Check if any user has the same $id (username) as the provided userId, case-insensitive
+            const userExists = response.users.some(
+                (user) => user.$id.toLowerCase() === userId.toLowerCase()
+            );
 
-           // Check if any user has the same $id as the provided userId
-           const userExists = response.users.some(
-               (user) => user.$id === userId
-           );
+            return userExists;
+        } catch (error) {
+            console.error("Error checking user ID:", error);
+            return false;
+        }
+    };
 
-           return userExists;
-       } catch (error) {
-           console.error("Error checking user ID:", error);
-           return false; // Return false if there's an error
-       }
-   };
-   const isUserEmailTaken = async (email) => {
-       try {
-           const response = await users.list();
-           console.log("Users List:", response.users);
+    const isUserEmailTaken = async (email) => {
+        try {
+            const response = await users.list();
+            console.log("Users List:", response.users);
 
-           // Check if any user has the same $id as the provided userId
-           const userEmailExists = response.users.some(
-               (user) => user.email === email
-           );
+            // Check if any user has the same email as the provided email, case-insensitive
+            const emailExists = response.users.some(
+                (user) => user.email.toLowerCase() === email.toLowerCase()
+            );
 
-           return userEmailExists;
-       } catch (error) {
-           console.error("Error checking user ID:", error);
-           return false; // Return false if there's an error
-       }
-   };
+            return emailExists;
+        } catch (error) {
+            console.error("Error checking email:", error);
+            return false;
+        }
+    };
 
-   const handleRegister = async (e) => {
-       e.preventDefault();
+    const handleRegister = async (e) => {
+        e.preventDefault();
 
-       if (!navigator.onLine) {
-           alert("Please check your internet connection.");
-           return;
-       }
+        if (!navigator.onLine) {
+            alert("Please check your internet connection.");
+            return;
+        }
 
-       // Validation checks for email, etc.
-       if (!isValidEmail(formData.email)) {
-           alert(
-               "Please enter a valid Gmail address (e.g., example@gmail.com)."
-           );
-           return;
-       }
+        // Validation checks for email, etc.
+        if (!isValidEmail(formData.email)) {
+            alert(
+                "Please enter a valid Gmail address (e.g., example@gmail.com)."
+            );
+            return;
+        }
 
-       setLoading(true);
-       setErrors({ name: "", email: "", password: "" });
+        setLoading(true);
+        setErrors({ name: "", email: "", password: "" });
 
-       // Check if user ID is already taken
-       const userIdTaken = await isUserIdTaken(formData.name); // Assuming `name` is the user ID
-       if (userIdTaken) {
-           setErrors((prevErrors) => ({
-               ...prevErrors,
-               name: "This username is already taken. Please choose a different one.",
-           }));
-           
-           
-           setLoading(false);
-           return;
-       }
-        const userEmailExists = await isUserEmailTaken(formData.email);
-       if (userEmailExists) {
-           setErrors((prevErrors) => ({
-               ...prevErrors,
-               email: "This email is already taken. Please choose a different one.",
-           }));
-
-           setLoading(false);
-           return;
-       }
-
-       try {
-           await account.create(
-               formData.name,
-               formData.email,
-               formData.password
-           );
-           handleLogin(e); // Proceed with login if registration is successful
-       } catch (error) {
-           console.error("Registration failed:", error.message);
-           setLoading(false);
-       }
-   };
-
-
+        try {
+            await account.create(
+                formData.name,
+                formData.email,
+                formData.password
+            );
+            handleLogin(e); // Proceed with login if registration is successful
+        } catch (error) {
+            console.error("Registration failed:", error.message);
+            setLoading(false);
+        }
+    };
 
     const toggleForms = () => {
         setIsLogin(!isLogin);
@@ -377,6 +385,7 @@ const App = () => {
                                 Sign Up
                             </h2>
                             <form onSubmit={handleRegister}>
+                                {/* Username Input */}
                                 <div
                                     className="input-box animation"
                                     style={{ "--i": 18, "--j": 1 }}
@@ -390,6 +399,12 @@ const App = () => {
                                     />
                                     <label>Username</label>
                                     <i className="bx bxs-user"></i>
+                                    {loadingUsername && (
+                                        <div className="loading-spinner">
+                                            {/* You can use any spinner here, this is a simple one */}
+                                            <div className="spinner"></div>
+                                        </div>
+                                    )}
                                     {errors.name && (
                                         <p
                                             style={{
@@ -402,6 +417,7 @@ const App = () => {
                                     )}
                                 </div>
 
+                                {/* Email Input */}
                                 <div
                                     className="input-box animation"
                                     style={{ "--i": 19, "--j": 2 }}
@@ -416,6 +432,11 @@ const App = () => {
                                     />
                                     <label>Email</label>
                                     <i className="bx bxs-envelope"></i>
+                                    {loadingEmail && (
+                                        <div className="loading-spinner">
+                                            <div className="spinner"></div>
+                                        </div>
+                                    )}
                                     {errors.email && (
                                         <p
                                             style={{
@@ -428,6 +449,7 @@ const App = () => {
                                     )}
                                 </div>
 
+                                {/* Password Input */}
                                 <div
                                     className="input-box animation"
                                     style={{ "--i": 20, "--j": 3 }}
@@ -473,7 +495,7 @@ const App = () => {
                                                 width="16"
                                                 height="16"
                                                 fill="currentColor"
-                                                class="bi bi-eye-fill"
+                                                className="bi bi-eye-fill"
                                                 viewBox="0 0 16 16"
                                             >
                                                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
@@ -485,7 +507,7 @@ const App = () => {
                                                 width="16"
                                                 height="16"
                                                 fill="currentColor"
-                                                class="bi bi-eye-slash-fill"
+                                                className="bi bi-eye-slash-fill"
                                                 viewBox="0 0 16 16"
                                             >
                                                 <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z" />
@@ -495,6 +517,7 @@ const App = () => {
                                     </span>
                                 </div>
 
+                                {/* Submit Button */}
                                 <button
                                     type="submit"
                                     className="btn animation"
