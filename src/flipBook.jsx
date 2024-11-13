@@ -43,6 +43,22 @@ const FlipBook = () => {
             }
         }
     }, [storyName, chapters]);
+    useEffect(() => {
+        if (videoElement && videoSrc) {
+            isPlaying ? videoElement.play() : videoElement.pause();
+        }
+    }, [isPlaying, videoSrc, videoElement]);
+    useEffect(() => {
+        return () => {
+            if (isPlaying) {
+                synthRef.current.cancel();
+                setIsPlaying(false);
+                if (videoElement) {
+                    videoElement.pause();
+                }
+            }
+        };
+    }, [isPlaying, videoElement]);
 
     const handlePlayPause = (htmlContent, pageIndex) => {
         const synth = synthRef.current;
@@ -248,6 +264,7 @@ const FlipBook = () => {
                             currentPageIndex
                         )
                     }
+                    disabled={!selectedVoice} // Disable if no voice selected
                 >
                     {isPlaying ? "Pause" : "Play"}
                 </button>
@@ -264,6 +281,7 @@ const FlipBook = () => {
                         className="close-video-button"
                         onClick={() => {
                             setVideoSrc("");
+                            setSelectedVoice(null); // Reset the selected voice to disable play button
                             if (videoElement) {
                                 videoElement.pause();
                             }
@@ -271,6 +289,7 @@ const FlipBook = () => {
                     >
                         X
                     </button>
+
                     <video
                         src={videoSrc}
                         ref={setVideoElement}
@@ -303,7 +322,7 @@ const FlipBook = () => {
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="16"
                                 height="16"
-                                fill="black"
+                                fill="white"
                                 className="bi bi-arrows-angle-expand"
                                 viewBox="0 0 16 16"
                             >

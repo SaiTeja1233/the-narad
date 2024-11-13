@@ -6,8 +6,12 @@
         "react",
         "starter"
     ],
+    "engines": {
+        "node": "14.x"
+    },
     "main": "src/index.js",
     "dependencies": {
+        "18": "^0.0.0",
         "@emailjs/browser": "^3.11.0",
         "@fortawesome/fontawesome-svg-core": "^6.4.2",
         "@fortawesome/free-brands-svg-icons": "^6.4.2",
@@ -51,8 +55,5 @@
         "not dead",
         "not ie <= 11",
         "not op_mini all"
-    ],
-    "engines": {
-        "node": "18.x"
-    }
+    ]
 }

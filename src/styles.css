@@ -58,6 +58,11 @@
     background-color: #07013d;
     box-shadow: -5px 6px 20px 0px rgba(88, 88, 88, 0.569);
 }
+.Audio-play-pause:disabled {
+    background-color: black;
+    color: white; /* Set text color to contrast with the black background */
+    cursor: not-allowed;
+}
 
 .audio-control-button {
     position: absolute;
@@ -190,7 +195,8 @@ h2 {
     color: #000000;
     font-weight: 600;
     font-size: 3.2rem;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .video-container {
@@ -254,8 +260,7 @@ h2 {
     padding: 0% 10%;
 }
 
-.S1page1
-.S1page2,
+.S1page1 .S1page2,
 .S1page3,
 .S1page4,
 .S1page5,

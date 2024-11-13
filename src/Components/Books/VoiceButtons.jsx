@@ -5,17 +5,18 @@ import "./Voicestyles.css";
 const voiceImages = {
     "Microsoft David": "/male1.png",
     "Microsoft Mark": "/male2.png",
+    "Microsoft Zira": "/femaleimg2.png",
     "Microsoft Heera": "/femaleimg2.png",
-    "Microsoft Zira": "/female1.png",
-    "Google US English": "/femaleimg2.png",
+    "Google US English": "/female1.png",
 };
 
 // Map of original voice names to custom display names
 const voiceDisplayNames = {
     "Microsoft David": "Sitaram",
     "Microsoft Mark": "Arjun",
-    "Google US English": "Suryakantham",
-    "Microsoft Zira": "Aadhya",
+    "Google US English": "Aadhya",
+    "Microsoft Zira": " Suryakantham",
+   
 };
 
 const VoiceButtons = ({ onVoiceSelect }) => {
@@ -33,6 +34,7 @@ const VoiceButtons = ({ onVoiceSelect }) => {
                       voice.name.startsWith("Microsoft Mark")
                     : voice.name.startsWith("Google US English") ||
                       voice.name.startsWith("Microsoft Zira")
+                    //   voice.name.startsWith("Microsoft Zira")
             );
             setVoices(filteredVoices);
         };
