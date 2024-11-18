@@ -1,19 +1,28 @@
 import React, { useEffect } from "react";
 import "./HomeBooks.css";
-import ScrollReveal from "scrollreveal"; // Import ScrollReveal
-import { Link } from "react-router-dom";
+import ScrollReveal from "scrollreveal";
+import { Link, useNavigate } from "react-router-dom";
 
-function HomeBooks({ books }) {
+function HomeBooks({ books, isLoggedIn }) {
+    const navigate = useNavigate();
+
     useEffect(() => {
-        // Apply ScrollReveal animation to each book item
         ScrollReveal().reveal(`#homeBooksmain-${books.className}`, {
-            origin: "bottom", // Animation origin
-            distance: "50px", // Distance to move
-            duration: 1000, // Duration of the animation
-            delay: 200, // Delay before animation starts
-            reset: false, 
+            origin: "bottom",
+            distance: "50px",
+            duration: 1000,
+            delay: 200,
+            reset: false,
         });
     }, [books.className]);
+
+    const handleContinue = () => {
+        if (isLoggedIn) {
+            navigate("/books"); // Navigate to books page
+        } else {
+            navigate("/loginpage"); // Navigate to login page
+        }
+    };
 
     return (
         <div className="homebooks">
@@ -31,10 +40,11 @@ function HomeBooks({ books }) {
                             <div className="line"></div>
                         </div>
                         <div className="homeCardBtn">
-                            <button className="homeBooksBtn">
-                                <span>
-                                    <Link to="/loginpage">Continue</Link>
-                                </span>
+                            <button
+                                className="homeBooksBtn"
+                                onClick={handleContinue}
+                            >
+                                <span>Continue</span>
                                 <svg
                                     width="34"
                                     height="34"
@@ -58,7 +68,6 @@ function HomeBooks({ books }) {
                         </div>
                     </div>
                 </div>
-
                 <div className="cover">
                     <img src={books.img} alt={books.title} />
                 </div>

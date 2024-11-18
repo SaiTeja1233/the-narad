@@ -17,7 +17,12 @@ function Home() {
         { className: "story5", title: "Art of Living", img: "story5.jpg" },
         // { className: "story6", title: "Guns and Glory", img: "story6.jpg" },
     ]);
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect(() => {
+        // Replace with your authentication check logic
+        const user = localStorage.getItem("user"); // Example of checking login state
+        setIsLoggedIn(!!user); // If user exists, set `isLoggedIn` to true
+    }, []);
     return (
         <div className="Home-cont">
             <div className="backTotopButton">
@@ -38,7 +43,7 @@ function Home() {
             <div className="Home-Books">
                 {homebooks?.map((item, index) => (
                     <div key={index} className="bookscont">
-                        <HomeBooks books={item} />
+                        <HomeBooks books={item} isLoggedIn={isLoggedIn} />
                     </div>
                 ))}
             </div>
