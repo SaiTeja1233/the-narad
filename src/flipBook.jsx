@@ -309,7 +309,7 @@ const FlipBook = () => {
                         onClick={toggleVideoContainerSize}
                         className="toggle-size-button"
                     >
-                        {isVideoMaximized ? (
+                         {isVideoMaximized ? (
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="16"

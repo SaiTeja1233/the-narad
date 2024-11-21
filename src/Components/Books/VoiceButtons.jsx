@@ -5,7 +5,8 @@ import "./Voicestyles.css";
 const voiceImages = {
     "Microsoft David": "/male1.png",
     "Microsoft Mark": "/male2.png",
-    "Microsoft Zira": "/female1.png",
+    "Microsoft Zira High": "/female1.png", // High pitch
+    "Microsoft Zira Low": "/female2.png", // Low pitch
     "Microsoft Heera": "/femaleimg2.png",
     "Google US English": "/female1.png",
 };
@@ -14,7 +15,8 @@ const voiceImages = {
 const voiceDisplayNames = {
     "Microsoft David": "Sitaram",
     "Microsoft Mark": "Arjun",
-    "Microsoft Zira": "Aadhya",
+    "Microsoft Zira High": "Aadhya (High Pitch)",
+    "Microsoft Zira Low": "Aadhya (Low Pitch)",
     "Microsoft Heera": "Suryakantham",
 };
 
@@ -31,8 +33,9 @@ const VoiceButtons = ({ onVoiceSelect }) => {
                 isMale
                     ? voice.name.startsWith("Microsoft David") ||
                       voice.name.startsWith("Microsoft Mark")
-                    : voice.name.startsWith("Microsoft Heera") ||
-                      voice.name.startsWith("Microsoft Zira")
+                    : voice.name.startsWith("Microsoft Zira") || // Include both high and low pitch
+                      voice.name.startsWith("Microsoft Heera") ||
+                      voice.name.startsWith("Google US English")
             );
             setVoices(filteredVoices);
         };
