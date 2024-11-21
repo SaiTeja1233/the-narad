@@ -5,16 +5,16 @@ import "./Voicestyles.css";
 const voiceImages = {
     "Microsoft David": "/male1.png",
     "Microsoft Mark": "/male2.png",
-    "Microsoft Zira": "/female1.png",
-    "Microsoft Heera": "/femaleimg2.png",
+    "Microsoft Zira": "/femaleimg2.png",
+    "Google US English": "/female1.png",
 };
 
 // Map of original voice names to custom display names
 const voiceDisplayNames = {
     "Microsoft David": "Sitaram",
     "Microsoft Mark": "Arjun",
-    "Microsoft Heera": "Suryakantham",
-    "Microsoft Zira": "Aadhya",
+    "Google US English": "Aadhya",
+    "Microsoft Zira": "Suryakantham",
 };
 
 const VoiceButtons = ({ onVoiceSelect }) => {
@@ -45,24 +45,24 @@ const VoiceButtons = ({ onVoiceSelect }) => {
     // }, [isMale]);
 
        useEffect(() => {
-           const loadVoices = () => {
-               const allVoices = window.speechSynthesis.getVoices();
-               const filteredVoices = allVoices.filter((voice) =>
-                   isMale
-                       ? voice.name.startsWith("Microsoft Mark") ||
-                         voice.name.startsWith("Microsoft David")
-                       : voice.name.startsWith("Microsoft Heera") ||
-                         voice.name.startsWith("Microsoft Zira")
-               );
-               setVoices(filteredVoices);
-           };
+        const loadVoices = () => {
+            const allVoices = window.speechSynthesis.getVoices();
+            const filteredVoices = allVoices.filter((voice) =>
+                isMale
+                    ? voice.name.startsWith("Microsoft David") ||
+                      voice.name.startsWith("Microsoft Mark")
+                    : voice.name.startsWith("Microsoft Zira") ||
+                      voice.name.startsWith("Google US English")
+            );
+            setVoices(filteredVoices);
+        };
 
-           if (window.speechSynthesis.onvoiceschanged !== undefined) {
-               window.speechSynthesis.onvoiceschanged = loadVoices;
-           }
+        if (window.speechSynthesis.onvoiceschanged !== undefined) {
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
 
-           loadVoices(); // Initial load
-       }, [isMale]);
+        loadVoices(); // Initial load
+    }, [isMale]);
 
 
 

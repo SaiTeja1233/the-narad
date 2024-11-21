@@ -29,8 +29,8 @@ const FlipBook = () => {
     const voiceVideos = {
         "Microsoft David": "/malevid1.mp4",
         "Microsoft Mark": "/malevid2.mp4",
-        "Microsoft Zira": "/femalevid2.mp4",
-        "Microsoft Heera": "/femalevid1.mp4",
+        "Microsoft Zira": "/femalevid1.mp4",
+        "Google US English": "/femalevid2.mp4",
     };
 
     useEffect(() => {
