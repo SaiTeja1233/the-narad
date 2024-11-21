@@ -84,6 +84,7 @@
     transition: all 0.25s ease;
     box-shadow: -5px 6px 20px 0px rgba(26, 26, 26, 0.544);
     z-index: 1000;
+     outline: none;
 }
 
 .audio-control-button:hover {
@@ -97,11 +98,11 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.808);
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    z-index: 999;
+    z-index: 99;
 }
 
 .popup-content {
@@ -147,8 +148,11 @@
     right: 10px;
     background: none;
     border: none;
-    font-size: 18px;
+    color: white;
     cursor: pointer;
+}
+.close-popup:hover{
+    color: rgb(255, 112, 112);
 }
 
 .page {
