@@ -43,11 +43,17 @@ const FlipBook = () => {
             }
         }
     }, [storyName, chapters]);
+
     useEffect(() => {
         if (videoElement && videoSrc) {
-            isPlaying ? videoElement.play() : videoElement.pause();
+            if (isPlaying) {
+                videoElement.play();
+            } else {
+                videoElement.pause();
+            }
         }
     }, [isPlaying, videoSrc, videoElement]);
+
     useEffect(() => {
         return () => {
             if (isPlaying) {
@@ -79,6 +85,7 @@ const FlipBook = () => {
             if (selectedVoice) {
                 utterance.voice = selectedVoice;
             }
+
             // Event when audio finishes naturally
             utterance.onend = () => {
                 setIsPlaying(false);
